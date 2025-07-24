@@ -115,53 +115,87 @@ export async function createPixelFusion(
               const colorB = imageDataB.data[index + 2];
               const colorA = imageDataB.data[index + 3];
               
-              // 基于配置选择形状和颜色 - 确保完全填充
+              // 基于配置选择形状和颜色 - 确保完全填充，无黑色空白
               let finalR, finalG, finalB, finalA;
               
               switch (finalConfig.shapeSource) {
                 case 'first':
                   // 使用第一张图的形状，第二张图的颜色完全填充
-                  finalA = shapeA > 5 ? 255 : 0; // 降低透明度阈值确保形状完全填充
-                  if (shapeA > 5) {
+                  // 降低透明度阈值，确保形状完全填充
+                  finalA = shapeA > 1 ? 255 : 0;
+                  
+                  if (shapeA > 1) {
                     // 使用第二张图的颜色，确保完全填充形状
-                    finalR = colorR || 128; // 防止黑色填充
-                    finalG = colorG || 128;
-                    finalB = colorB || 128;
+                    // 如果第二张图在该位置有颜色，使用它；否则使用最近的有效颜色
+                    if (colorA > 1) {
+                      finalR = colorR;
+                      finalG = colorG;
+                      finalB = colorB;
+                    } else {
+                      // 寻找最近的有效颜色
+                      const nearestColor = findNearestValidColor(imageDataB, x, y, 512, 512);
+                      finalR = nearestColor.r;
+                      finalG = nearestColor.g;
+                      finalB = nearestColor.b;
+                    }
                   } else {
                     // 透明区域保持透明
-                    finalR = finalG = finalB = 0;
+                    finalR = finalG = finalB = finalA = 0;
                   }
                   break;
+                  
                 case 'second':
                   // 使用第二张图的形状，第一张图的颜色完全填充
-                  finalA = colorA > 5 ? 255 : 0; // 降低透明度阈值确保形状完全填充
-                  if (colorA > 5) {
+                  finalA = colorA > 1 ? 255 : 0;
+                  
+                  if (colorA > 1) {
                     // 使用第一张图的颜色，确保完全填充形状
-                    finalR = shapeR || 128;
-                    finalG = shapeG || 128;
-                    finalB = shapeB || 128;
+                    if (shapeA > 1) {
+                      finalR = shapeR;
+                      finalG = shapeG;
+                      finalB = shapeB;
+                    } else {
+                      // 寻找最近的有效颜色
+                      const nearestColor = findNearestValidColor(imageDataA, x, y, 512, 512);
+                      finalR = nearestColor.r;
+                      finalG = nearestColor.g;
+                      finalB = nearestColor.b;
+                    }
                   } else {
                     // 透明区域保持透明
-                    finalR = finalG = finalB = 0;
+                    finalR = finalG = finalB = finalA = 0;
                   }
                   break;
+                  
                 case 'blend':
                 default:
                   // 智能融合：确保完全填充，无黑色空白
                   const useShape = shapeA > colorA;
-                  finalA = Math.max(shapeA, colorA) > 5 ? 255 : 0;
+                  finalA = Math.max(shapeA, colorA) > 1 ? 255 : 0;
+                  
                   if (finalA > 0) {
                     // 使用对应的颜色，确保完全填充
-                    const sourceR = useShape ? (colorR || 128) : (shapeR || 128);
-                    const sourceG = useShape ? (colorG || 128) : (shapeG || 128);
-                    const sourceB = useShape ? (colorB || 128) : (shapeB || 128);
+                    const sourceImage = useShape ? imageDataB : imageDataA;
+                    const sourceIndex = useShape ? 
+                      [colorR, colorG, colorB, colorA] : 
+                      [shapeR, shapeG, shapeB, shapeA];
                     
-                    finalR = sourceR;
-                    finalG = sourceG;
-                    finalB = sourceB;
+                    if (sourceIndex[3] > 1) {
+                      finalR = sourceIndex[0];
+                      finalG = sourceIndex[1];
+                      finalB = sourceIndex[2];
+                    } else {
+                      // 寻找最近的有效颜色
+                      const nearestColor = findNearestValidColor(
+                        sourceImage, x, y, 512, 512
+                      );
+                      finalR = nearestColor.r;
+                      finalG = nearestColor.g;
+                      finalB = nearestColor.b;
+                    }
                   } else {
                     // 透明区域保持透明
-                    finalR = finalG = finalB = 0;
+                    finalR = finalG = finalB = finalA = 0;
                   }
                   break;
               }
@@ -285,6 +319,67 @@ function addPixelOutline(ctx: CanvasRenderingContext2D, width: number, height: n
   }
   
   ctx.putImageData(newImageData, 0, 0);
+}
+
+/**
+ * 寻找最近的有效颜色（非透明）
+ * @param imageData 图像数据
+ * @param x 当前x坐标
+ * @param y 当前y坐标
+ * @param width 图像宽度
+ * @param height 图像高度
+ * @returns 最近的有效颜色
+ */
+function findNearestValidColor(
+  imageData: ImageData,
+  x: number,
+  y: number,
+  width: number,
+  height: number
+): { r: number; g: number; b: number } {
+  const data = imageData.data;
+  
+  // 首先检查当前像素
+  const currentIndex = (y * width + x) * 4;
+  if (data[currentIndex + 3] > 1) {
+    return {
+      r: data[currentIndex],
+      g: data[currentIndex + 1],
+      b: data[currentIndex + 2]
+    };
+  }
+  
+  // 搜索半径
+  const maxRadius = 20;
+  
+  // 从近到远搜索有效颜色
+  for (let radius = 1; radius <= maxRadius; radius++) {
+    // 检查圆形区域内的像素
+    for (let dy = -radius; dy <= radius; dy++) {
+      for (let dx = -radius; dx <= radius; dx++) {
+        // 跳过超出边界的像素
+        const nx = x + dx;
+        const ny = y + dy;
+        
+        if (nx < 0 || ny < 0 || nx >= width || ny >= height) continue;
+        
+        // 跳过不在圆形区域内的像素
+        if (dx * dx + dy * dy > radius * radius) continue;
+        
+        const index = (ny * width + nx) * 4;
+        if (data[index + 3] > 1) {
+          return {
+            r: data[index],
+            g: data[index + 1],
+            b: data[index + 2]
+          };
+        }
+      }
+    }
+  }
+  
+  // 如果找不到有效颜色，返回默认颜色（避免黑色）
+  return { r: 128, g: 128, b: 128 };
 }
 
 /**

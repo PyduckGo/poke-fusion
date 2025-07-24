@@ -1,0 +1,2704 @@
+[{
+        "id": 1,
+        "name": "妙蛙种子",
+        "english": "Bulbasaur",
+        "type": ["草", "毒"],
+        "generation": 1
+    },
+    {
+        "id": 2,
+        "name": "妙蛙草",
+        "english": "Ivysaur",
+        "type": ["草", "毒"],
+        "generation": 1
+    },
+    {
+        "id": 3,
+        "name": "妙蛙花",
+        "english": "Venusaur",
+        "type": ["草", "毒"],
+        "generation": 1
+    },
+    {
+        "id": 4,
+        "name": "小火龙",
+        "english": "Charmander",
+        "type": ["火"],
+        "generation": 1
+    },
+    {
+        "id": 5,
+        "name": "火恐龙",
+        "english": "Charmeleon",
+        "type": ["火"],
+        "generation": 1
+    },
+    {
+        "id": 6,
+        "name": "喷火龙",
+        "english": "Charizard",
+        "type": ["火", "飞行"],
+        "generation": 1
+    },
+    {
+        "id": 7,
+        "name": "杰尼龟",
+        "english": "Squirtle",
+        "type": ["水"],
+        "generation": 1
+    },
+    {
+        "id": 8,
+        "name": "卡咪龟",
+        "english": "Wartortle",
+        "type": ["水"],
+        "generation": 1
+    },
+    {
+        "id": 9,
+        "name": "水箭龟",
+        "english": "Blastoise",
+        "type": ["水"],
+        "generation": 1
+    },
+    {
+        "id": 10,
+        "name": "绿毛虫",
+        "english": "Caterpie",
+        "type": ["虫"],
+        "generation": 1
+    },
+    {
+        "id": 11,
+        "name": "铁甲蛹",
+        "english": "Metapod",
+        "type": ["虫"],
+        "generation": 1
+    },
+    {
+        "id": 12,
+        "name": "巴大蝶",
+        "english": "Butterfree",
+        "type": ["虫", "飞行"],
+        "generation": 1
+    },
+    {
+        "id": 13,
+        "name": "独角虫",
+        "english": "Weedle",
+        "type": ["虫", "毒"],
+        "generation": 1
+    },
+    {
+        "id": 14,
+        "name": "铁壳昆",
+        "english": "Kakuna",
+        "type": ["虫", "毒"],
+        "generation": 1
+    },
+    {
+        "id": 15,
+        "name": "大针蜂",
+        "english": "Beedrill",
+        "type": ["虫", "毒"],
+        "generation": 1
+    },
+    {
+        "id": 16,
+        "name": "波波",
+        "english": "Pidgey",
+        "type": ["一般", "飞行"],
+        "generation": 1
+    },
+    {
+        "id": 17,
+        "name": "比比鸟",
+        "english": "Pidgeotto",
+        "type": ["一般", "飞行"],
+        "generation": 1
+    },
+    {
+        "id": 18,
+        "name": "大比鸟",
+        "english": "Pidgeot",
+        "type": ["一般", "飞行"],
+        "generation": 1
+    },
+    {
+        "id": 19,
+        "name": "小拉达",
+        "english": "Rattata",
+        "type": ["一般"],
+        "generation": 1
+    },
+    {
+        "id": 20,
+        "name": "拉达",
+        "english": "Raticate",
+        "type": ["一般"],
+        "generation": 1
+    },
+    {
+        "id": 21,
+        "name": "烈雀",
+        "english": "Spearow",
+        "type": ["一般", "飞行"],
+        "generation": 1
+    },
+    {
+        "id": 22,
+        "name": "大嘴雀",
+        "english": "Fearow",
+        "type": ["一般", "飞行"],
+        "generation": 1
+    },
+    {
+        "id": 23,
+        "name": "阿柏蛇",
+        "english": "Ekans",
+        "type": ["毒"],
+        "generation": 1
+    },
+    {
+        "id": 24,
+        "name": "阿柏怪",
+        "english": "Arbok",
+        "type": ["毒"],
+        "generation": 1
+    },
+    {
+        "id": 25,
+        "name": "皮卡丘",
+        "english": "Pikachu",
+        "type": ["电"],
+        "generation": 1
+    },
+    {
+        "id": 26,
+        "name": "雷丘",
+        "english": "Raichu",
+        "type": ["电"],
+        "generation": 1
+    },
+    {
+        "id": 27,
+        "name": "穿山鼠",
+        "english": "Sandshrew",
+        "type": ["地面"],
+        "generation": 1
+    },
+    {
+        "id": 28,
+        "name": "穿山王",
+        "english": "Sandslash",
+        "type": ["地面"],
+        "generation": 1
+    },
+    {
+        "id": 29,
+        "name": "尼多兰♀",
+        "english": "Nidoran♀",
+        "type": ["毒"],
+        "generation": 1
+    },
+    {
+        "id": 30,
+        "name": "尼多娜",
+        "english": "Nidorina",
+        "type": ["毒"],
+        "generation": 1
+    },
+    {
+        "id": 31,
+        "name": "尼多后",
+        "english": "Nidoqueen",
+        "type": ["毒", "地面"],
+        "generation": 1
+    },
+    {
+        "id": 32,
+        "name": "尼多兰♂",
+        "english": "Nidoran♂",
+        "type": ["毒"],
+        "generation": 1
+    },
+    {
+        "id": 33,
+        "name": "尼多力诺",
+        "english": "Nidorino",
+        "type": ["毒"],
+        "generation": 1
+    },
+    {
+        "id": 34,
+        "name": "尼多王",
+        "english": "Nidoking",
+        "type": ["毒", "地面"],
+        "generation": 1
+    },
+    {
+        "id": 35,
+        "name": "皮皮",
+        "english": "Clefairy",
+        "type": ["妖精"],
+        "generation": 1
+    },
+    {
+        "id": 36,
+        "name": "皮可西",
+        "english": "Clefable",
+        "type": ["妖精"],
+        "generation": 1
+    },
+    {
+        "id": 37,
+        "name": "六尾",
+        "english": "Vulpix",
+        "type": ["火"],
+        "generation": 1
+    },
+    {
+        "id": 38,
+        "name": "九尾",
+        "english": "Ninetales",
+        "type": ["火"],
+        "generation": 1
+    },
+    {
+        "id": 39,
+        "name": "胖丁",
+        "english": "Jigglypuff",
+        "type": ["一般", "妖精"],
+        "generation": 1
+    },
+    {
+        "id": 40,
+        "name": "胖可丁",
+        "english": "Wigglytuff",
+        "type": ["一般", "妖精"],
+        "generation": 1
+    },
+    {
+        "id": 41,
+        "name": "超音蝠",
+        "english": "Zubat",
+        "type": ["毒", "飞行"],
+        "generation": 1
+    },
+    {
+        "id": 42,
+        "name": "大嘴蝠",
+        "english": "Golbat",
+        "type": ["毒", "飞行"],
+        "generation": 1
+    },
+    {
+        "id": 43,
+        "name": "走路草",
+        "english": "Oddish",
+        "type": ["草", "毒"],
+        "generation": 1
+    },
+    {
+        "id": 44,
+        "name": "臭臭花",
+        "english": "Gloom",
+        "type": ["草", "毒"],
+        "generation": 1
+    },
+    {
+        "id": 45,
+        "name": "霸王花",
+        "english": "Vileplume",
+        "type": ["草", "毒"],
+        "generation": 1
+    },
+    {
+        "id": 46,
+        "name": "蘑菇虫",
+        "english": "Paras",
+        "type": ["虫", "草"],
+        "generation": 1
+    },
+    {
+        "id": 47,
+        "name": "巨菇虫",
+        "english": "Parasect",
+        "type": ["虫", "草"],
+        "generation": 1
+    },
+    {
+        "id": 48,
+        "name": "毛球",
+        "english": "Venonat",
+        "type": ["虫", "毒"],
+        "generation": 1
+    },
+    {
+        "id": 49,
+        "name": "末入蛾",
+        "english": "Venomoth",
+        "type": ["虫", "毒"],
+        "generation": 1
+    },
+    {
+        "id": 50,
+        "name": "地鼠",
+        "english": "Diglett",
+        "type": ["地面"],
+        "generation": 1
+    },
+    {
+        "id": 51,
+        "name": "三地鼠",
+        "english": "Dugtrio",
+        "type": ["地面"],
+        "generation": 1
+    },
+    {
+        "id": 52,
+        "name": "喵喵",
+        "english": "Meowth",
+        "type": ["一般"],
+        "generation": 1
+    },
+    {
+        "id": 53,
+        "name": "猫老大",
+        "english": "Persian",
+        "type": ["一般"],
+        "generation": 1
+    },
+    {
+        "id": 54,
+        "name": "可达鸭",
+        "english": "Psyduck",
+        "type": ["水"],
+        "generation": 1
+    },
+    {
+        "id": 55,
+        "name": "哥达鸭",
+        "english": "Golduck",
+        "type": ["水"],
+        "generation": 1
+    },
+    {
+        "id": 56,
+        "name": "猴怪",
+        "english": "Mankey",
+        "type": ["格斗"],
+        "generation": 1
+    },
+    {
+        "id": 57,
+        "name": "火爆猴",
+        "english": "Primeape",
+        "type": ["格斗"],
+        "generation": 1
+    },
+    {
+        "id": 58,
+        "name": "卡蒂狗",
+        "english": "Growlithe",
+        "type": ["火"],
+        "generation": 1
+    },
+    {
+        "id": 59,
+        "name": "风速狗",
+        "english": "Arcanine",
+        "type": ["火"],
+        "generation": 1
+    },
+    {
+        "id": 60,
+        "name": "蚊香蝌蚪",
+        "english": "Poliwag",
+        "type": ["水"],
+        "generation": 1
+    },
+    {
+        "id": 61,
+        "name": "蚊香蛙",
+        "english": "Poliwhirl",
+        "type": ["水"],
+        "generation": 1
+    },
+    {
+        "id": 62,
+        "name": "快泳蛙",
+        "english": "Poliwrath",
+        "type": ["水", "格斗"],
+        "generation": 1
+    },
+    {
+        "id": 63,
+        "name": "凯西",
+        "english": "Abra",
+        "type": ["超能力"],
+        "generation": 1
+    },
+    {
+        "id": 64,
+        "name": "勇基拉",
+        "english": "Kadabra",
+        "type": ["超能力"],
+        "generation": 1
+    },
+    {
+        "id": 65,
+        "name": "胡地",
+        "english": "Alakazam",
+        "type": ["超能力"],
+        "generation": 1
+    },
+    {
+        "id": 66,
+        "name": "腕力",
+        "english": "Machop",
+        "type": ["格斗"],
+        "generation": 1
+    },
+    {
+        "id": 67,
+        "name": "豪力",
+        "english": "Machoke",
+        "type": ["格斗"],
+        "generation": 1
+    },
+    {
+        "id": 68,
+        "name": "怪力",
+        "english": "Machamp",
+        "type": ["格斗"],
+        "generation": 1
+    },
+    {
+        "id": 69,
+        "name": "喇叭芽",
+        "english": "Bellsprout",
+        "type": ["草", "毒"],
+        "generation": 1
+    },
+    {
+        "id": 70,
+        "name": "口呆花",
+        "english": "Weepinbell",
+        "type": ["草", "毒"],
+        "generation": 1
+    },
+    {
+        "id": 71,
+        "name": "大食花",
+        "english": "Victreebel",
+        "type": ["草", "毒"],
+        "generation": 1
+    },
+    {
+        "id": 72,
+        "name": "玛瑙水母",
+        "english": "Tentacool",
+        "type": ["水", "毒"],
+        "generation": 1
+    },
+    {
+        "id": 73,
+        "name": "毒刺水母",
+        "english": "Tentacruel",
+        "type": ["水", "毒"],
+        "generation": 1
+    },
+    {
+        "id": 74,
+        "name": "小拳石",
+        "english": "Geodude",
+        "type": ["岩石", "地面"],
+        "generation": 1
+    },
+    {
+        "id": 75,
+        "name": "隆隆石",
+        "english": "Graveler",
+        "type": ["岩石", "地面"],
+        "generation": 1
+    },
+    {
+        "id": 76,
+        "name": "隆隆岩",
+        "english": "Golem",
+        "type": ["岩石", "地面"],
+        "generation": 1
+    },
+    {
+        "id": 77,
+        "name": "小火马",
+        "english": "Ponyta",
+        "type": ["火"],
+        "generation": 1
+    },
+    {
+        "id": 78,
+        "name": "烈焰马",
+        "english": "Rapidash",
+        "type": ["火"],
+        "generation": 1
+    },
+    {
+        "id": 79,
+        "name": "呆呆兽",
+        "english": "Slowpoke",
+        "type": ["水", "超能力"],
+        "generation": 1
+    },
+    {
+        "id": 80,
+        "name": "呆河马",
+        "english": "Slowbro",
+        "type": ["水", "超能力"],
+        "generation": 1
+    },
+    {
+        "id": 81,
+        "name": "小磁怪",
+        "english": "Magnemite",
+        "type": ["电", "钢"],
+        "generation": 1
+    },
+    {
+        "id": 82,
+        "name": "三合一磁怪",
+        "english": "Magneton",
+        "type": ["电", "钢"],
+        "generation": 1
+    },
+    {
+        "id": 83,
+        "name": "大葱鸭",
+        "english": "Farfetch'd",
+        "type": ["一般", "飞行"],
+        "generation": 1
+    },
+    {
+        "id": 84,
+        "name": "嘟嘟",
+        "english": "Doduo",
+        "type": ["一般", "飞行"],
+        "generation": 1
+    },
+    {
+        "id": 85,
+        "name": "嘟嘟利",
+        "english": "Dodrio",
+        "type": ["一般", "飞行"],
+        "generation": 1
+    },
+    {
+        "id": 86,
+        "name": "小海狮",
+        "english": "Seel",
+        "type": ["水"],
+        "generation": 1
+    },
+    {
+        "id": 87,
+        "name": "白海狮",
+        "english": "Dewgong",
+        "type": ["水", "冰"],
+        "generation": 1
+    },
+    {
+        "id": 88,
+        "name": "臭泥",
+        "english": "Grimer",
+        "type": ["毒"],
+        "generation": 1
+    },
+    {
+        "id": 89,
+        "name": "臭臭泥",
+        "english": "Muk",
+        "type": ["毒"],
+        "generation": 1
+    },
+    {
+        "id": 90,
+        "name": "大舌贝",
+        "english": "Shellder",
+        "type": ["水"],
+        "generation": 1
+    },
+    {
+        "id": 91,
+        "name": "刺甲贝",
+        "english": "Cloyster",
+        "type": ["水", "冰"],
+        "generation": 1
+    },
+    {
+        "id": 92,
+        "name": "鬼斯",
+        "english": "Gastly",
+        "type": ["幽灵", "毒"],
+        "generation": 1
+    },
+    {
+        "id": 93,
+        "name": "鬼斯通",
+        "english": "Haunter",
+        "type": ["幽灵", "毒"],
+        "generation": 1
+    },
+    {
+        "id": 94,
+        "name": "耿鬼",
+        "english": "Gengar",
+        "type": ["幽灵", "毒"],
+        "generation": 1
+    },
+    {
+        "id": 95,
+        "name": "大岩蛇",
+        "english": "Onix",
+        "type": ["岩石", "地面"],
+        "generation": 1
+    },
+    {
+        "id": 96,
+        "name": "素利普",
+        "english": "Drowzee",
+        "type": ["超能力"],
+        "generation": 1
+    },
+    {
+        "id": 97,
+        "name": "素利柏",
+        "english": "Hypno",
+        "type": ["超能力"],
+        "generation": 1
+    },
+    {
+        "id": 98,
+        "name": "大钳蟹",
+        "english": "Krabby",
+        "type": ["水"],
+        "generation": 1
+    },
+    {
+        "id": 99,
+        "name": "巨钳蟹",
+        "english": "Kingler",
+        "type": ["水"],
+        "generation": 1
+    },
+    {
+        "id": 100,
+        "name": "雷电球",
+        "english": "Voltorb",
+        "type": ["电"],
+        "generation": 1
+    },
+    {
+        "id": 101,
+        "name": "顽皮雷弹",
+        "english": "Electrode",
+        "type": ["电"],
+        "generation": 1
+    },
+    {
+        "id": 102,
+        "name": "蛋蛋",
+        "english": "Exeggcute",
+        "type": ["草", "超能力"],
+        "generation": 1
+    },
+    {
+        "id": 103,
+        "name": "椰蛋树",
+        "english": "Exeggutor",
+        "type": ["草", "超能力"],
+        "generation": 1
+    },
+    {
+        "id": 104,
+        "name": "可拉可拉",
+        "english": "Cubone",
+        "type": ["地面"],
+        "generation": 1
+    },
+    {
+        "id": 105,
+        "name": "嘎啦嘎啦",
+        "english": "Marowak",
+        "type": ["地面"],
+        "generation": 1
+    },
+    {
+        "id": 106,
+        "name": "飞腿郎",
+        "english": "Hitmonlee",
+        "type": ["格斗"],
+        "generation": 1
+    },
+    {
+        "id": 107,
+        "name": "快拳郎",
+        "english": "Hitmonchan",
+        "type": ["格斗"],
+        "generation": 1
+    },
+    {
+        "id": 108,
+        "name": "大舌头",
+        "english": "Lickitung",
+        "type": ["一般"],
+        "generation": 1
+    },
+    {
+        "id": 109,
+        "name": "瓦斯弹",
+        "english": "Koffing",
+        "type": ["毒"],
+        "generation": 1
+    },
+    {
+        "id": 110,
+        "name": "双弹瓦斯",
+        "english": "Weezing",
+        "type": ["毒"],
+        "generation": 1
+    },
+    {
+        "id": 111,
+        "name": "铁甲犀牛",
+        "english": "Rhyhorn",
+        "type": ["地面", "岩石"],
+        "generation": 1
+    },
+    {
+        "id": 112,
+        "name": "铁甲暴龙",
+        "english": "Rhydon",
+        "type": ["地面", "岩石"],
+        "generation": 1
+    },
+    {
+        "id": 113,
+        "name": "吉利蛋",
+        "english": "Chansey",
+        "type": ["一般"],
+        "generation": 1
+    },
+    {
+        "id": 114,
+        "name": "蔓藤怪",
+        "english": "Tangela",
+        "type": ["草"],
+        "generation": 1
+    },
+    {
+        "id": 115,
+        "name": "袋龙",
+        "english": "Kangaskhan",
+        "type": ["一般"],
+        "generation": 1
+    },
+    {
+        "id": 116,
+        "name": "墨海马",
+        "english": "Horsea",
+        "type": ["水"],
+        "generation": 1
+    },
+    {
+        "id": 117,
+        "name": "海刺龙",
+        "english": "Seadra",
+        "type": ["水"],
+        "generation": 1
+    },
+    {
+        "id": 118,
+        "name": "角金鱼",
+        "english": "Goldeen",
+        "type": ["水"],
+        "generation": 1
+    },
+    {
+        "id": 119,
+        "name": "金鱼王",
+        "english": "Seaking",
+        "type": ["水"],
+        "generation": 1
+    },
+    {
+        "id": 120,
+        "name": "海星星",
+        "english": "Staryu",
+        "type": ["水"],
+        "generation": 1
+    },
+    {
+        "id": 121,
+        "name": "宝石海星",
+        "english": "Starmie",
+        "type": ["水", "超能力"],
+        "generation": 1
+    },
+    {
+        "id": 122,
+        "name": "魔墙人偶",
+        "english": "Mr. Mime",
+        "type": ["超能力", "妖精"],
+        "generation": 1
+    },
+    {
+        "id": 123,
+        "name": "飞天螳螂",
+        "english": "Scyther",
+        "type": ["虫", "飞行"],
+        "generation": 1
+    },
+    {
+        "id": 124,
+        "name": "迷唇姐",
+        "english": "Jynx",
+        "type": ["冰", "超能力"],
+        "generation": 1
+    },
+    {
+        "id": 125,
+        "name": "电击兽",
+        "english": "Electabuzz",
+        "type": ["电"],
+        "generation": 1
+    },
+    {
+        "id": 126,
+        "name": "鸭嘴火兽",
+        "english": "Magmar",
+        "type": ["火"],
+        "generation": 1
+    },
+    {
+        "id": 127,
+        "name": "大甲",
+        "english": "Pinsir",
+        "type": ["虫"],
+        "generation": 1
+    },
+    {
+        "id": 128,
+        "name": "肯泰罗",
+        "english": "Tauros",
+        "type": ["一般"],
+        "generation": 1
+    },
+    {
+        "id": 129,
+        "name": "鲤鱼王",
+        "english": "Magikarp",
+        "type": ["水"],
+        "generation": 1
+    },
+    {
+        "id": 130,
+        "name": "暴鲤龙",
+        "english": "Gyarados",
+        "type": ["水", "飞行"],
+        "generation": 1
+    },
+    {
+        "id": 131,
+        "name": "拉普拉斯",
+        "english": "Lapras",
+        "type": ["水", "冰"],
+        "generation": 1
+    },
+    {
+        "id": 132,
+        "name": "百变怪",
+        "english": "Ditto",
+        "type": ["一般"],
+        "generation": 1
+    },
+    {
+        "id": 133,
+        "name": "伊布",
+        "english": "Eevee",
+        "type": ["一般"],
+        "generation": 1
+    },
+    {
+        "id": 134,
+        "name": "水伊布",
+        "english": "Vaporeon",
+        "type": ["水"],
+        "generation": 1
+    },
+    {
+        "id": 135,
+        "name": "雷伊布",
+        "english": "Jolteon",
+        "type": ["电"],
+        "generation": 1
+    },
+    {
+        "id": 136,
+        "name": "火伊布",
+        "english": "Flareon",
+        "type": ["火"],
+        "generation": 1
+    },
+    {
+        "id": 137,
+        "name": "3D龙",
+        "english": "Porygon",
+        "type": ["一般"],
+        "generation": 1
+    },
+    {
+        "id": 138,
+        "name": "菊石兽",
+        "english": "Omanyte",
+        "type": ["岩石", "水"],
+        "generation": 1
+    },
+    {
+        "id": 139,
+        "name": "多刺菊石兽",
+        "english": "Omastar",
+        "type": ["岩石", "水"],
+        "generation": 1
+    },
+    {
+        "id": 140,
+        "name": "化石盔",
+        "english": "Kabuto",
+        "type": ["岩石", "水"],
+        "generation": 1
+    },
+    {
+        "id": 141,
+        "name": "镰刀盔",
+        "english": "Kabutops",
+        "type": ["岩石", "水"],
+        "generation": 1
+    },
+    {
+        "id": 142,
+        "name": "化石翼龙",
+        "english": "Aerodactyl",
+        "type": ["岩石", "飞行"],
+        "generation": 1
+    },
+    {
+        "id": 143,
+        "name": "卡比兽",
+        "english": "Snorlax",
+        "type": ["一般"],
+        "generation": 1
+    },
+    {
+        "id": 144,
+        "name": "急冻鸟",
+        "english": "Articuno",
+        "type": ["冰", "飞行"],
+        "generation": 1
+    },
+    {
+        "id": 145,
+        "name": "闪电鸟",
+        "english": "Zapdos",
+        "type": ["电", "飞行"],
+        "generation": 1
+    },
+    {
+        "id": 146,
+        "name": "火焰鸟",
+        "english": "Moltres",
+        "type": ["火", "飞行"],
+        "generation": 1
+    },
+    {
+        "id": 147,
+        "name": "迷你龙",
+        "english": "Dratini",
+        "type": ["龙"],
+        "generation": 1
+    },
+    {
+        "id": 148,
+        "name": "哈克龙",
+        "english": "Dragonair",
+        "type": ["龙"],
+        "generation": 1
+    },
+    {
+        "id": 149,
+        "name": "快龙",
+        "english": "Dragonite",
+        "type": ["龙", "飞行"],
+        "generation": 1
+    },
+    {
+        "id": 150,
+        "name": "超梦",
+        "english": "Mewtwo",
+        "type": ["超能力"],
+        "generation": 1
+    },
+    {
+        "id": 151,
+        "name": "梦幻",
+        "english": "Mew",
+        "type": ["超能力"],
+        "generation": 1
+    },
+    {
+        "id": 152,
+        "name": "菊草叶",
+        "english": "Chikorita",
+        "type": ["草"],
+        "generation": 2
+    },
+    {
+        "id": 153,
+        "name": "月桂叶",
+        "english": "Bayleef",
+        "type": ["草"],
+        "generation": 2
+    },
+    {
+        "id": 154,
+        "name": "大菊花",
+        "english": "Meganium",
+        "type": ["草"],
+        "generation": 2
+    },
+    {
+        "id": 155,
+        "name": "火球鼠",
+        "english": "Cyndaquil",
+        "type": ["火"],
+        "generation": 2
+    },
+    {
+        "id": 156,
+        "name": "火岩鼠",
+        "english": "Quilava",
+        "type": ["火"],
+        "generation": 2
+    },
+    {
+        "id": 157,
+        "name": "火暴兽",
+        "english": "Typhlosion",
+        "type": ["火"],
+        "generation": 2
+    },
+    {
+        "id": 158,
+        "name": "小锯鳄",
+        "english": "Totodile",
+        "type": ["水"],
+        "generation": 2
+    },
+    {
+        "id": 159,
+        "name": "蓝鳄",
+        "english": "Croconaw",
+        "type": ["水"],
+        "generation": 2
+    },
+    {
+        "id": 160,
+        "name": "大力鳄",
+        "english": "Feraligatr",
+        "type": ["水"],
+        "generation": 2
+    },
+    {
+        "id": 161,
+        "name": "尾立",
+        "english": "Sentret",
+        "type": ["一般"],
+        "generation": 2
+    },
+    {
+        "id": 162,
+        "name": "大尾立",
+        "english": "Furret",
+        "type": ["一般"],
+        "generation": 2
+    },
+    {
+        "id": 163,
+        "name": "咕咕",
+        "english": "Hoothoot",
+        "type": ["一般", "飞行"],
+        "generation": 2
+    },
+    {
+        "id": 164,
+        "name": "猫头夜鹰",
+        "english": "Noctowl",
+        "type": ["一般", "飞行"],
+        "generation": 2
+    },
+    {
+        "id": 165,
+        "name": "芭瓢虫",
+        "english": "Ledyba",
+        "type": ["虫", "飞行"],
+        "generation": 2
+    },
+    {
+        "id": 166,
+        "name": "安瓢虫",
+        "english": "Ledian",
+        "type": ["虫", "飞行"],
+        "generation": 2
+    },
+    {
+        "id": 167,
+        "name": "线球",
+        "english": "Spinarak",
+        "type": ["虫", "毒"],
+        "generation": 2
+    },
+    {
+        "id": 168,
+        "name": "阿利多斯",
+        "english": "Ariados",
+        "type": ["虫", "毒"],
+        "generation": 2
+    },
+    {
+        "id": 169,
+        "name": "叉字蝠",
+        "english": "Crobat",
+        "type": ["毒", "飞行"],
+        "generation": 2
+    },
+    {
+        "id": 170,
+        "name": "灯笼鱼",
+        "english": "Chinchou",
+        "type": ["水", "电"],
+        "generation": 2
+    },
+    {
+        "id": 171,
+        "name": "电灯怪",
+        "english": "Lanturn",
+        "type": ["水", "电"],
+        "generation": 2
+    },
+    {
+        "id": 172,
+        "name": "皮丘",
+        "english": "Pichu",
+        "type": ["电"],
+        "generation": 2
+    },
+    {
+        "id": 173,
+        "name": "皮宝宝",
+        "english": "Cleffa",
+        "type": ["妖精"],
+        "generation": 2
+    },
+    {
+        "id": 174,
+        "name": "宝宝丁",
+        "english": "Igglybuff",
+        "type": ["一般", "妖精"],
+        "generation": 2
+    },
+    {
+        "id": 175,
+        "name": "波克比",
+        "english": "Togepi",
+        "type": ["妖精"],
+        "generation": 2
+    },
+    {
+        "id": 176,
+        "name": "波克基古",
+        "english": "Togetic",
+        "type": ["妖精", "飞行"],
+        "generation": 2
+    },
+    {
+        "id": 177,
+        "name": "天然雀",
+        "english": "Natu",
+        "type": ["超能力", "飞行"],
+        "generation": 2
+    },
+    {
+        "id": 178,
+        "name": "天然鸟",
+        "english": "Xatu",
+        "type": ["超能力", "飞行"],
+        "generation": 2
+    },
+    {
+        "id": 179,
+        "name": "咩利羊",
+        "english": "Mareep",
+        "type": ["电"],
+        "generation": 2
+    },
+    {
+        "id": 180,
+        "name": "绵绵",
+        "english": "Flaaffy",
+        "type": ["电"],
+        "generation": 2
+    },
+    {
+        "id": 181,
+        "name": "电龙",
+        "english": "Ampharos",
+        "type": ["电"],
+        "generation": 2
+    },
+    {
+        "id": 182,
+        "name": "美丽花",
+        "english": "Bellossom",
+        "type": ["草"],
+        "generation": 2
+    },
+    {
+        "id": 183,
+        "name": "玛力露",
+        "english": "Marill",
+        "type": ["水", "妖精"],
+        "generation": 2
+    },
+    {
+        "id": 184,
+        "name": "玛力露丽",
+        "english": "Azumarill",
+        "type": ["水", "妖精"],
+        "generation": 2
+    },
+    {
+        "id": 185,
+        "name": "胡说树",
+        "english": "Sudowoodo",
+        "type": ["岩石"],
+        "generation": 2
+    },
+    {
+        "id": 186,
+        "name": "牛蛙君",
+        "english": "Politoed",
+        "type": ["水"],
+        "generation": 2
+    },
+    {
+        "id": 187,
+        "name": "毽子草",
+        "english": "Hoppip",
+        "type": ["草", "飞行"],
+        "generation": 2
+    },
+    {
+        "id": 188,
+        "name": "毽子花",
+        "english": "Skiploom",
+        "type": ["草", "飞行"],
+        "generation": 2
+    },
+    {
+        "id": 189,
+        "name": "毽子棉",
+        "english": "Jumpluff",
+        "type": ["草", "飞行"],
+        "generation": 2
+    },
+    {
+        "id": 190,
+        "name": "长尾怪手",
+        "english": "Aipom",
+        "type": ["一般"],
+        "generation": 2
+    },
+    {
+        "id": 191,
+        "name": "向日种子",
+        "english": "Sunkern",
+        "type": ["草"],
+        "generation": 2
+    },
+    {
+        "id": 192,
+        "name": "向日花怪",
+        "english": "Sunflora",
+        "type": ["草"],
+        "generation": 2
+    },
+    {
+        "id": 193,
+        "name": "阳阳玛",
+        "english": "Yanma",
+        "type": ["虫", "飞行"],
+        "generation": 2
+    },
+    {
+        "id": 194,
+        "name": "乌波",
+        "english": "Wooper",
+        "type": ["水", "地面"],
+        "generation": 2
+    },
+    {
+        "id": 195,
+        "name": "沼王",
+        "english": "Quagsire",
+        "type": ["水", "地面"],
+        "generation": 2
+    },
+    {
+        "id": 196,
+        "name": "太阳伊布",
+        "english": "Espeon",
+        "type": ["超能力"],
+        "generation": 2
+    },
+    {
+        "id": 197,
+        "name": "月亮伊布",
+        "english": "Umbreon",
+        "type": ["恶"],
+        "generation": 2
+    },
+    {
+        "id": 198,
+        "name": "黑暗鸦",
+        "english": "Murkrow",
+        "type": ["恶", "飞行"],
+        "generation": 2
+    },
+    {
+        "id": 199,
+        "name": "河马王",
+        "english": "Slowking",
+        "type": ["水", "超能力"],
+        "generation": 2
+    },
+    {
+        "id": 200,
+        "name": "梦妖",
+        "english": "Misdreavus",
+        "type": ["幽灵"],
+        "generation": 2
+    },
+    {
+        "id": 201,
+        "name": "未知图腾",
+        "english": "Unown",
+        "type": ["超能力"],
+        "generation": 2
+    },
+    {
+        "id": 202,
+        "name": "果然翁",
+        "english": "Wobbuffet",
+        "type": ["超能力"],
+        "generation": 2
+    },
+    {
+        "id": 203,
+        "name": "麒麟奇",
+        "english": "Girafarig",
+        "type": ["一般", "超能力"],
+        "generation": 2
+    },
+    {
+        "id": 204,
+        "name": "榛果球",
+        "english": "Pineco",
+        "type": ["虫"],
+        "generation": 2
+    },
+    {
+        "id": 205,
+        "name": "佛烈托斯",
+        "english": "Forretress",
+        "type": ["虫", "钢"],
+        "generation": 2
+    },
+    {
+        "id": 206,
+        "name": "土龙弟弟",
+        "english": "Dunsparce",
+        "type": ["一般"],
+        "generation": 2
+    },
+    {
+        "id": 207,
+        "name": "天蝎",
+        "english": "Gligar",
+        "type": ["地面", "飞行"],
+        "generation": 2
+    },
+    {
+        "id": 208,
+        "name": "大钢蛇",
+        "english": "Steelix",
+        "type": ["钢", "地面"],
+        "generation": 2
+    },
+    {
+        "id": 209,
+        "name": "布卢",
+        "english": "Snubbull",
+        "type": ["妖精"],
+        "generation": 2
+    },
+    {
+        "id": 210,
+        "name": "布卢皇",
+        "english": "Granbull",
+        "type": ["妖精"],
+        "generation": 2
+    },
+    {
+        "id": 211,
+        "name": "千针鱼",
+        "english": "Qwilfish",
+        "type": ["水", "毒"],
+        "generation": 2
+    },
+    {
+        "id": 212,
+        "name": "巨钳螳螂",
+        "english": "Scizor",
+        "type": ["虫", "钢"],
+        "generation": 2
+    },
+    {
+        "id": 213,
+        "name": "壶壶",
+        "english": "Shuckle",
+        "type": ["虫", "岩石"],
+        "generation": 2
+    },
+    {
+        "id": 214,
+        "name": "赫拉克罗斯",
+        "english": "Heracross",
+        "type": ["虫", "格斗"],
+        "generation": 2
+    },
+    {
+        "id": 215,
+        "name": "狃拉",
+        "english": "Sneasel",
+        "type": ["恶", "冰"],
+        "generation": 2
+    },
+    {
+        "id": 216,
+        "name": "熊宝宝",
+        "english": "Teddiursa",
+        "type": ["一般"],
+        "generation": 2
+    },
+    {
+        "id": 217,
+        "name": "圈圈熊",
+        "english": "Ursaring",
+        "type": ["一般"],
+        "generation": 2
+    },
+    {
+        "id": 218,
+        "name": "熔岩蜗牛",
+        "english": "Slugma",
+        "type": ["火"],
+        "generation": 2
+    },
+    {
+        "id": 219,
+        "name": "熔岩蜗牛",
+        "english": "Magcargo",
+        "type": ["火", "岩石"],
+        "generation": 2
+    },
+    {
+        "id": 220,
+        "name": "小山猪",
+        "english": "Swinub",
+        "type": ["冰", "地面"],
+        "generation": 2
+    },
+    {
+        "id": 221,
+        "name": "长毛猪",
+        "english": "Piloswine",
+        "type": ["冰", "地面"],
+        "generation": 2
+    },
+    {
+        "id": 222,
+        "name": "太阳珊瑚",
+        "english": "Corsola",
+        "type": ["水", "岩石"],
+        "generation": 2
+    },
+    {
+        "id": 223,
+        "name": "铁炮鱼",
+        "english": "Remoraid",
+        "type": ["水"],
+        "generation": 2
+    },
+    {
+        "id": 224,
+        "name": "章鱼桶",
+        "english": "Octillery",
+        "type": ["水"],
+        "generation": 2
+    },
+    {
+        "id": 225,
+        "name": "信使鸟",
+        "english": "Delibird",
+        "type": ["冰", "飞行"],
+        "generation": 2
+    },
+    {
+        "id": 226,
+        "name": "巨翅飞鱼",
+        "english": "Mantine",
+        "type": ["水", "飞行"],
+        "generation": 2
+    },
+    {
+        "id": 227,
+        "name": "盔甲鸟",
+        "english": "Skarmory",
+        "type": ["钢", "飞行"],
+        "generation": 2
+    },
+    {
+        "id": 228,
+        "name": "戴鲁比",
+        "english": "Houndour",
+        "type": ["恶", "火"],
+        "generation": 2
+    },
+    {
+        "id": 229,
+        "name": "黑鲁加",
+        "english": "Houndoom",
+        "type": ["恶", "火"],
+        "generation": 2
+    },
+    {
+        "id": 230,
+        "name": "刺龙王",
+        "english": "Kingdra",
+        "type": ["水", "龙"],
+        "generation": 2
+    },
+    {
+        "id": 231,
+        "name": "小小象",
+        "english": "Phanpy",
+        "type": ["地面"],
+        "generation": 2
+    },
+    {
+        "id": 232,
+        "name": "顿甲",
+        "english": "Donphan",
+        "type": ["地面"],
+        "generation": 2
+    },
+    {
+        "id": 233,
+        "name": "3D龙2",
+        "english": "Porygon2",
+        "type": ["一般"],
+        "generation": 2
+    },
+    {
+        "id": 234,
+        "name": "惊角鹿",
+        "english": "Stantler",
+        "type": ["一般"],
+        "generation": 2
+    },
+    {
+        "id": 235,
+        "name": "图图犬",
+        "english": "Smeargle",
+        "type": ["一般"],
+        "generation": 2
+    },
+    {
+        "id": 236,
+        "name": "巴尔郎",
+        "english": "Tyrogue",
+        "type": ["格斗"],
+        "generation": 2
+    },
+    {
+        "id": 237,
+        "name": "柯波郎",
+        "english": "Hitmontop",
+        "type": ["格斗"],
+        "generation": 2
+    },
+    {
+        "id": 238,
+        "name": "迷唇娃",
+        "english": "Smoochum",
+        "type": ["冰", "超能力"],
+        "generation": 2
+    },
+    {
+        "id": 239,
+        "name": "电击怪",
+        "english": "Elekid",
+        "type": ["电"],
+        "generation": 2
+    },
+    {
+        "id": 240,
+        "name": "鸭嘴宝宝",
+        "english": "Magby",
+        "type": ["火"],
+        "generation": 2
+    },
+    {
+        "id": 241,
+        "name": "大奶罐",
+        "english": "Miltank",
+        "type": ["一般"],
+        "generation": 2
+    },
+    {
+        "id": 242,
+        "name": "幸福蛋",
+        "english": "Blissey",
+        "type": ["一般"],
+        "generation": 2
+    },
+    {
+        "id": 243,
+        "name": "雷公",
+        "english": "Raikou",
+        "type": ["电"],
+        "generation": 2
+    },
+    {
+        "id": 244,
+        "name": "炎帝",
+        "english": "Entei",
+        "type": ["火"],
+        "generation": 2
+    },
+    {
+        "id": 245,
+        "name": "水君",
+        "english": "Suicune",
+        "type": ["水"],
+        "generation": 2
+    },
+    {
+        "id": 246,
+        "name": "由基拉",
+        "english": "Larvitar",
+        "type": ["岩石", "地面"],
+        "generation": 2
+    },
+    {
+        "id": 247,
+        "name": "沙基拉",
+        "english": "Pupitar",
+        "type": ["岩石", "地面"],
+        "generation": 2
+    },
+    {
+        "id": 248,
+        "name": "班基拉斯",
+        "english": "Tyranitar",
+        "type": ["岩石", "恶"],
+        "generation": 2
+    },
+    {
+        "id": 249,
+        "name": "洛奇亚",
+        "english": "Lugia",
+        "type": ["超能力", "飞行"],
+        "generation": 2
+    },
+    {
+        "id": 250,
+        "name": "凤王",
+        "english": "Ho-Oh",
+        "type": ["火", "飞行"],
+        "generation": 2
+    },
+    {
+        "id": 251,
+        "name": "雪拉比",
+        "english": "Celebi",
+        "type": ["草", "超能力"],
+        "generation": 2
+    },
+    {
+        "id": 252,
+        "name": "木守宫",
+        "english": "Treecko",
+        "type": ["草"],
+        "generation": 3
+    },
+    {
+        "id": 253,
+        "name": "森林蜥蜴",
+        "english": "Grovyle",
+        "type": ["草"],
+        "generation": 3
+    },
+    {
+        "id": 254,
+        "name": "蜥蜴王",
+        "english": "Sceptile",
+        "type": ["草"],
+        "generation": 3
+    },
+    {
+        "id": 255,
+        "name": "火稚鸡",
+        "english": "Torchic",
+        "type": ["火"],
+        "generation": 3
+    },
+    {
+        "id": 256,
+        "name": "力壮鸡",
+        "english": "Combusken",
+        "type": ["火", "格斗"],
+        "generation": 3
+    },
+    {
+        "id": 257,
+        "name": "火焰鸡",
+        "english": "Blaziken",
+        "type": ["火", "格斗"],
+        "generation": 3
+    },
+    {
+        "id": 258,
+        "name": "水跃鱼",
+        "english": "Mudkip",
+        "type": ["水"],
+        "generation": 3
+    },
+    {
+        "id": 259,
+        "name": "沼跃鱼",
+        "english": "Marshtomp",
+        "type": ["水", "地面"],
+        "generation": 3
+    },
+    {
+        "id": 260,
+        "name": "巨沼怪",
+        "english": "Swampert",
+        "type": ["水", "地面"],
+        "generation": 3
+    },
+    {
+        "id": 261,
+        "name": "土狼犬",
+        "english": "Poochyena",
+        "type": ["恶"],
+        "generation": 3
+    },
+    {
+        "id": 262,
+        "name": "大狼犬",
+        "english": "Mightyena",
+        "type": ["恶"],
+        "generation": 3
+    },
+    {
+        "id": 263,
+        "name": "蛇纹熊",
+        "english": "Zigzagoon",
+        "type": ["一般"],
+        "generation": 3
+    },
+    {
+        "id": 264,
+        "name": "直冲熊",
+        "english": "Linoone",
+        "type": ["一般"],
+        "generation": 3
+    },
+    {
+        "id": 265,
+        "name": "刺尾虫",
+        "english": "Wurmple",
+        "type": ["虫"],
+        "generation": 3
+    },
+    {
+        "id": 266,
+        "name": "甲壳蛹",
+        "english": "Silcoon",
+        "type": ["虫"],
+        "generation": 3
+    },
+    {
+        "id": 267,
+        "name": "狩猎凤蝶",
+        "english": "Beautifly",
+        "type": ["虫", "飞行"],
+        "generation": 3
+    },
+    {
+        "id": 268,
+        "name": "盾甲茧",
+        "english": "Cascoon",
+        "type": ["虫"],
+        "generation": 3
+    },
+    {
+        "id": 269,
+        "name": "毒粉蝶",
+        "english": "Dustox",
+        "type": ["虫", "毒"],
+        "generation": 3
+    },
+    {
+        "id": 270,
+        "name": "莲叶童子",
+        "english": "Lotad",
+        "type": ["水", "草"],
+        "generation": 3
+    },
+    {
+        "id": 271,
+        "name": "莲帽小童",
+        "english": "Lombre",
+        "type": ["水", "草"],
+        "generation": 3
+    },
+    {
+        "id": 272,
+        "name": "乐天河童",
+        "english": "Ludicolo",
+        "type": ["水", "草"],
+        "generation": 3
+    },
+    {
+        "id": 273,
+        "name": "橡实果",
+        "english": "Seedot",
+        "type": ["草"],
+        "generation": 3
+    },
+    {
+        "id": 274,
+        "name": "长鼻叶",
+        "english": "Nuzleaf",
+        "type": ["草", "恶"],
+        "generation": 3
+    },
+    {
+        "id": 275,
+        "name": "狡猾天狗",
+        "english": "Shiftry",
+        "type": ["草", "恶"],
+        "generation": 3
+    },
+    {
+        "id": 276,
+        "name": "傲骨燕",
+        "english": "Taillow",
+        "type": ["一般", "飞行"],
+        "generation": 3
+    },
+    {
+        "id": 277,
+        "name": "大王燕",
+        "english": "Swellow",
+        "type": ["一般", "飞行"],
+        "generation": 3
+    },
+    {
+        "id": 278,
+        "name": "长翅鸥",
+        "english": "Wingull",
+        "type": ["水", "飞行"],
+        "generation": 3
+    },
+    {
+        "id": 279,
+        "name": "大嘴鸥",
+        "english": "Pelipper",
+        "type": ["水", "飞行"],
+        "generation": 3
+    },
+    {
+        "id": 280,
+        "name": "拉鲁拉丝",
+        "english": "Ralts",
+        "type": ["超能力", "妖精"],
+        "generation": 3
+    },
+    {
+        "id": 281,
+        "name": "奇鲁莉安",
+        "english": "Kirlia",
+        "type": ["超能力", "妖精"],
+        "generation": 3
+    },
+    {
+        "id": 282,
+        "name": "沙奈朵",
+        "english": "Gardevoir",
+        "type": ["超能力", "妖精"],
+        "generation": 3
+    },
+    {
+        "id": 283,
+        "name": "溜溜糖球",
+        "english": "Surskit",
+        "type": ["虫", "水"],
+        "generation": 3
+    },
+    {
+        "id": 284,
+        "name": "雨翅蛾",
+        "english": "Masquerain",
+        "type": ["虫", "飞行"],
+        "generation": 3
+    },
+    {
+        "id": 285,
+        "name": "蘑蘑菇",
+        "english": "Shroomish",
+        "type": ["草"],
+        "generation": 3
+    },
+    {
+        "id": 286,
+        "name": "斗笠菇",
+        "english": "Breloom",
+        "type": ["草", "格斗"],
+        "generation": 3
+    },
+    {
+        "id": 287,
+        "name": "懒人獭",
+        "english": "Slakoth",
+        "type": ["一般"],
+        "generation": 3
+    },
+    {
+        "id": 288,
+        "name": "过动猿",
+        "english": "Vigoroth",
+        "type": ["一般"],
+        "generation": 3
+    },
+    {
+        "id": 289,
+        "name": "请假王",
+        "english": "Slaking",
+        "type": ["一般"],
+        "generation": 3
+    },
+    {
+        "id": 290,
+        "name": "土居忍士",
+        "english": "Nincada",
+        "type": ["虫", "地面"],
+        "generation": 3
+    },
+    {
+        "id": 291,
+        "name": "铁面忍者",
+        "english": "Ninjask",
+        "type": ["虫", "飞行"],
+        "generation": 3
+    },
+    {
+        "id": 292,
+        "name": "脱壳忍者",
+        "english": "Shedinja",
+        "type": ["虫", "幽灵"],
+        "generation": 3
+    },
+    {
+        "id": 293,
+        "name": "咕妞妞",
+        "english": "Whismur",
+        "type": ["一般"],
+        "generation": 3
+    },
+    {
+        "id": 294,
+        "name": "吼爆弹",
+        "english": "Loudred",
+        "type": ["一般"],
+        "generation": 3
+    },
+    {
+        "id": 295,
+        "name": "爆音怪",
+        "english": "Exploud",
+        "type": ["一般"],
+        "generation": 3
+    },
+    {
+        "id": 296,
+        "name": "幕下力士",
+        "english": "Makuhita",
+        "type": ["格斗"],
+        "generation": 3
+    },
+    {
+        "id": 297,
+        "name": "超力王",
+        "english": "Hariyama",
+        "type": ["格斗"],
+        "generation": 3
+    },
+    {
+        "id": 298,
+        "name": "露力丽",
+        "english": "Azurill",
+        "type": ["一般", "妖精"],
+        "generation": 3
+    },
+    {
+        "id": 299,
+        "name": "朝北鼻",
+        "english": "Nosepass",
+        "type": ["岩石"],
+        "generation": 3
+    },
+    {
+        "id": 300,
+        "name": "向尾喵",
+        "english": "Skitty",
+        "type": ["一般"],
+        "generation": 3
+    },
+    {
+        "id": 301,
+        "name": "优雅猫",
+        "english": "Delcatty",
+        "type": ["一般"],
+        "generation": 3
+    },
+    {
+        "id": 302,
+        "name": "勾魂眼",
+        "english": "Sableye",
+        "type": ["恶", "幽灵"],
+        "generation": 3
+    },
+    {
+        "id": 303,
+        "name": "大嘴娃",
+        "english": "Mawile",
+        "type": ["钢", "妖精"],
+        "generation": 3
+    },
+    {
+        "id": 304,
+        "name": "可可多拉",
+        "english": "Aron",
+        "type": ["钢", "岩石"],
+        "generation": 3
+    },
+    {
+        "id": 305,
+        "name": "可多拉",
+        "english": "Lairon",
+        "type": ["钢", "岩石"],
+        "generation": 3
+    },
+    {
+        "id": 306,
+        "name": "波士可多拉",
+        "english": "Aggron",
+        "type": ["钢", "岩石"],
+        "generation": 3
+    },
+    {
+        "id": 307,
+        "name": "玛沙那",
+        "english": "Meditite",
+        "type": ["格斗", "超能力"],
+        "generation": 3
+    },
+    {
+        "id": 308,
+        "name": "恰雷姆",
+        "english": "Medicham",
+        "type": ["格斗", "超能力"],
+        "generation": 3
+    },
+    {
+        "id": 309,
+        "name": "落雷兽",
+        "english": "Electrike",
+        "type": ["电"],
+        "generation": 3
+    },
+    {
+        "id": 310,
+        "name": "雷电兽",
+        "english": "Manectric",
+        "type": ["电"],
+        "generation": 3
+    },
+    {
+        "id": 311,
+        "name": "正电拍拍",
+        "english": "Plusle",
+        "type": ["电"],
+        "generation": 3
+    },
+    {
+        "id": 312,
+        "name": "负电拍拍",
+        "english": "Minun",
+        "type": ["电"],
+        "generation": 3
+    },
+    {
+        "id": 313,
+        "name": "电萤虫",
+        "english": "Volbeat",
+        "type": ["虫"],
+        "generation": 3
+    },
+    {
+        "id": 314,
+        "name": "甜甜萤",
+        "english": "Illumise",
+        "type": ["虫"],
+        "generation": 3
+    },
+    {
+        "id": 315,
+        "name": "毒蔷薇",
+        "english": "Roselia",
+        "type": ["草", "毒"],
+        "generation": 3
+    },
+    {
+        "id": 316,
+        "name": "溶食兽",
+        "english": "Gulpin",
+        "type": ["毒"],
+        "generation": 3
+    },
+    {
+        "id": 317,
+        "name": "吞食兽",
+        "english": "Swalot",
+        "type": ["毒"],
+        "generation": 3
+    },
+    {
+        "id": 318,
+        "name": "利牙鱼",
+        "english": "Carvanha",
+        "type": ["水", "恶"],
+        "generation": 3
+    },
+    {
+        "id": 319,
+        "name": "巨牙鲨",
+        "english": "Sharpedo",
+        "type": ["水", "恶"],
+        "generation": 3
+    },
+    {
+        "id": 320,
+        "name": "吼吼鲸",
+        "english": "Wailmer",
+        "type": ["水"],
+        "generation": 3
+    },
+    {
+        "id": 321,
+        "name": "吼鲸王",
+        "english": "Wailord",
+        "type": ["水"],
+        "generation": 3
+    },
+    {
+        "id": 322,
+        "name": "呆火驼",
+        "english": "Numel",
+        "type": ["火", "地面"],
+        "generation": 3
+    },
+    {
+        "id": 323,
+        "name": "喷火驼",
+        "english": "Camerupt",
+        "type": ["火", "地面"],
+        "generation": 3
+    },
+    {
+        "id": 324,
+        "name": "煤炭龟",
+        "english": "Torkoal",
+        "type": ["火"],
+        "generation": 3
+    },
+    {
+        "id": 325,
+        "name": "跳跳猪",
+        "english": "Spoink",
+        "type": ["超能力"],
+        "generation": 3
+    },
+    {
+        "id": 326,
+        "name": "噗噗猪",
+        "english": "Grumpig",
+        "type": ["超能力"],
+        "generation": 3
+    },
+    {
+        "id": 327,
+        "name": "晃晃斑",
+        "english": "Spinda",
+        "type": ["一般"],
+        "generation": 3
+    },
+    {
+        "id": 328,
+        "name": "大颚蚁",
+        "english": "Trapinch",
+        "type": ["地面"],
+        "generation": 3
+    },
+    {
+        "id": 329,
+        "name": "超音波幼虫",
+        "english": "Vibrava",
+        "type": ["地面", "龙"],
+        "generation": 3
+    },
+    {
+        "id": 330,
+        "name": "沙漠蜻蜓",
+        "english": "Flygon",
+        "type": ["地面", "龙"],
+        "generation": 3
+    },
+    {
+        "id": 331,
+        "name": "毒粉蛾",
+        "english": "Cacnea",
+        "type": ["草"],
+        "generation": 3
+    },
+    {
+        "id": 332,
+        "name": "沙漠奈亚",
+        "english": "Cacturne",
+        "type": ["草", "恶"],
+        "generation": 3
+    },
+    {
+        "id": 333,
+        "name": "青绵鸟",
+        "english": "Swablu",
+        "type": ["一般", "飞行"],
+        "generation": 3
+    },
+    {
+        "id": 334,
+        "name": "七夕青鸟",
+        "english": "Altaria",
+        "type": ["龙", "飞行"],
+        "generation": 3
+    },
+    {
+        "id": 335,
+        "name": "猫鼬斩",
+        "english": "Zangoose",
+        "type": ["一般"],
+        "generation": 3
+    },
+    {
+        "id": 336,
+        "name": "饭匙蛇",
+        "english": "Seviper",
+        "type": ["毒"],
+        "generation": 3
+    },
+    {
+        "id": 337,
+        "name": "月石",
+        "english": "Lunatone",
+        "type": ["岩石", "超能力"],
+        "generation": 3
+    },
+    {
+        "id": 338,
+        "name": "太阳岩",
+        "english": "Solrock",
+        "type": ["岩石", "超能力"],
+        "generation": 3
+    },
+    {
+        "id": 339,
+        "name": "泥泥鳅",
+        "english": "Barboach",
+        "type": ["水", "地面"],
+        "generation": 3
+    },
+    {
+        "id": 340,
+        "name": "鲶鱼王",
+        "english": "Whiscash",
+        "type": ["水", "地面"],
+        "generation": 3
+    },
+    {
+        "id": 341,
+        "name": "龙虾小兵",
+        "english": "Corphish",
+        "type": ["水"],
+        "generation": 3
+    },
+    {
+        "id": 342,
+        "name": "铁螯龙虾",
+        "english": "Crawdaunt",
+        "type": ["水", "恶"],
+        "generation": 3
+    },
+    {
+        "id": 343,
+        "name": "天秤偶",
+        "english": "Baltoy",
+        "type": ["地面", "超能力"],
+        "generation": 3
+    },
+    {
+        "id": 344,
+        "name": "念力土偶",
+        "english": "Claydol",
+        "type": ["地面", "超能力"],
+        "generation": 3
+    },
+    {
+        "id": 345,
+        "name": "触手百合",
+        "english": "Lileep",
+        "type": ["岩石", "草"],
+        "generation": 3
+    },
+    {
+        "id": 346,
+        "name": "摇篮百合",
+        "english": "Cradily",
+        "type": ["岩石", "草"],
+        "generation": 3
+    },
+    {
+        "id": 347,
+        "name": "太古羽虫",
+        "english": "Anorith",
+        "type": ["岩石", "虫"],
+        "generation": 3
+    },
+    {
+        "id": 348,
+        "name": "太古盔甲",
+        "english": "Armaldo",
+        "type": ["岩石", "虫"],
+        "generation": 3
+    },
+    {
+        "id": 349,
+        "name": "笨笨鱼",
+        "english": "Feebas",
+        "type": ["水"],
+        "generation": 3
+    },
+    {
+        "id": 350,
+        "name": "美纳斯",
+        "english": "Milotic",
+        "type": ["水"],
+        "generation": 3
+    },
+    {
+        "id": 351,
+        "name": "飘浮泡泡",
+        "english": "Castform",
+        "type": ["一般"],
+        "generation": 3
+    },
+    {
+        "id": 352,
+        "name": "变隐龙",
+        "english": "Kecleon",
+        "type": ["一般"],
+        "generation": 3
+    },
+    {
+        "id": 353,
+        "name": "怨影娃娃",
+        "name": "怨影娃娃",
+        "english": "Shuppet",
+        "type": ["幽灵"],
+        "generation": 3
+    },
+    {
+        "id": 354,
+        "name": "诅咒娃娃",
+        "english": "Banette",
+        "type": ["幽灵"],
+        "generation": 3
+    },
+    {
+        "id": 355,
+        "name": "夜巨人",
+        "english": "Duskull",
+        "type": ["幽灵"],
+        "generation": 3
+    },
+    {
+        "id": 356,
+        "name": "夜黑魔人",
+        "english": "Dusclops",
+        "type": ["幽灵"],
+        "generation": 3
+    },
+    {
+        "id": 357,
+        "name": "热带龙",
+        "english": "Tropius",
+        "type": ["草", "飞行"],
+        "generation": 3
+    },
+    {
+        "id": 358,
+        "name": "风铃铃",
+        "english": "Chimecho",
+        "type": ["超能力"],
+        "generation": 3
+    },
+    {
+        "id": 359,
+        "name": "阿勃梭鲁",
+        "english": "Absol",
+        "type": ["恶"],
+        "generation": 3
+    },
+    {
+        "id": 360,
+        "name": "小果然",
+        "english": "Wynaut",
+        "type": ["超能力"],
+        "generation": 3
+    },
+    {
+        "id": 361,
+        "name": "雪童子",
+        "english": "Snorunt",
+        "type": ["冰"],
+        "generation": 3
+    },
+    {
+        "id": 362,
+        "name": "冰鬼护",
+        "english": "Glalie",
+        "type": ["冰"],
+        "generation": 3
+    },
+    {
+        "id": 363,
+        "name": "海豹球",
+        "english": "Spheal",
+        "type": ["冰", "水"],
+        "generation": 3
+    },
+    {
+        "id": 364,
+        "name": "海魔狮",
+        "english": "Sealeo",
+        "type": ["冰", "水"],
+        "generation": 3
+    },
+    {
+        "id": 365,
+        "name": "帝牙海狮",
+        "english": "Walrein",
+        "type": ["冰", "水"],
+        "generation": 3
+    },
+    {
+        "id": 366,
+        "name": "珍珠贝",
+        "english": "Clamperl",
+        "type": ["水"],
+        "generation": 3
+    },
+    {
+        "id": 367,
+        "name": "猎斑鱼",
+        "english": "Huntail",
+        "type": ["水"],
+        "generation": 3
+    },
+    {
+        "id": 368,
+        "name": "樱花鱼",
+        "english": "Gorebyss",
+        "type": ["水"],
+        "generation": 3
+    },
+    {
+        "id": 369,
+        "name": "古空棘鱼",
+        "english": "Relicanth",
+        "type": ["水", "岩石"],
+        "generation": 3
+    },
+    {
+        "id": 370,
+        "name": "爱心鱼",
+        "english": "Luvdisc",
+        "type": ["水"],
+        "generation": 3
+    },
+    {
+        "id": 371,
+        "name": "宝贝龙",
+        "english": "Bagon",
+        "type": ["龙"],
+        "generation": 3
+    },
+    {
+        "id": 372,
+        "name": "甲壳龙",
+        "english": "Shelgon",
+        "type": ["龙"],
+        "generation": 3
+    },
+    {
+        "id": 373,
+        "name": "暴飞龙",
+        "english": "Salamence",
+        "type": ["龙", "飞行"],
+        "generation": 3
+    },
+    {
+        "id": 374,
+        "name": "铁哑铃",
+        "english": "Beldum",
+        "type": ["钢", " psychic"],
+        "generation": 3
+    },
+    {
+        "id": 375,
+        "name": "金属怪",
+        "english": "Metang",
+        "type": ["钢", " psychic"],
+        "generation": 3
+    },
+    {
+        "id": 376,
+        "name": "巨金怪",
+        "english": "Metagross",
+        "type": ["钢", " psychic"],
+        "generation": 3
+    },
+    {
+        "id": 377,
+        "name": "雷吉洛克",
+        "english": "Regirock",
+        "type": ["岩石"],
+        "generation": 3
+    },
+    {
+        "id": 378,
+        "name": "雷吉艾斯",
+        "english": "Regice",
+        "type": ["冰"],
+        "generation": 3
+    },
+    {
+        "id": 379,
+        "name": "雷吉斯奇鲁",
+        "english": "Registeel",
+        "type": ["钢"],
+        "generation": 3
+    },
+    {
+        "id": 380,
+        "name": "拉帝亚斯",
+        "english": "Latias",
+        "type": ["龙", "超能力"],
+        "generation": 3
+    },
+    {
+        "id": 381,
+        "name": "拉帝欧斯",
+        "english": "Latios",
+        "type": ["龙", "超能力"],
+        "generation": 3
+    },
+    {
+        "id": 382,
+        "name": "盖欧卡",
+        "english": "Kyogre",
+        "type": ["水"],
+        "generation": 3
+    },
+    {
+        "id": 383,
+        "name": "固拉多",
+        "english": "Groudon",
+        "type": ["地面"],
+        "generation": 3
+    },
+    {
+        "id": 384,
+        "name": "烈空坐",
+        "english": "Rayquaza",
+        "type": ["龙", "飞行"],
+        "generation": 3
+    },
+    {
+        "id": 385,
+        "name": "基拉祈",
+        "english": "Jirachi",
+        "type": ["钢", "超能力"],
+        "generation": 3
+    },
+    {
+        "id": 386,
+        "name": "代欧奇希斯",
+        "english": "Deoxys",
+        "type": ["超能力"],
+        "generation": 3
+    }
+]

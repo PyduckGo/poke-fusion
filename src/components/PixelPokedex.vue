@@ -5,19 +5,28 @@
       <div class="pixel-text">Pixel PokéFusion</div>
     </div>
 
-  <!-- 主面板 -->
+    <!-- 主面板 -->
     <div v-else class="main-panel">
-      <!-- 左侧：原始宝可梦 -->
+      <!-- 左侧：原始宝可梦 + 搜索功能 -->
       <div class="original-pokemon">
-        <div class="pokemon-card" @click="selectPokemon('A')">
-          <img v-if="pokemonA" :src="pokemonA.sprites.front_default" :alt="getPokemonName(pokemonA)" />
-          <h3 class="chinese-pixel">{{ getPokemonName(pokemonA) }}</h3>
-          <p class="pokemon-id">#{{ pokemonA?.id.toString().padStart(3, '0') }}</p>
-        </div>
-        <div class="pokemon-card" @click="selectPokemon('B')">
-          <img v-if="pokemonB" :src="pokemonB.sprites.front_default" :alt="getPokemonName(pokemonB)" />
-          <h3 class="chinese-pixel">{{ getPokemonName(pokemonB) }}</h3>
-          <p class="pokemon-id">#{{ pokemonB?.id.toString().padStart(3, '0') }}</p>
+        <div class="pokemon-section">
+          <div class="pokemon-card" @click="selectPokemon('A')">
+            <img v-if="pokemonA" :src="getPokemonSprite(pokemonA)" :alt="getPokemonName(pokemonA)" />
+            <h3 class="chinese-pixel">{{ getPokemonName(pokemonA) }}</h3>
+            <p class="pokemon-id">#{{ pokemonA?.id.toString().padStart(3, '0') }}</p>
+            <button @click="openManualSelector('A')" class="manual-select-btn">
+              🔍 手动选择
+            </button>
+          </div>
+          
+          <div class="pokemon-card" @click="selectPokemon('B')">
+            <img v-if="pokemonB" :src="getPokemonSprite(pokemonB)" :alt="getPokemonName(pokemonB)" />
+            <h3 class="chinese-pixel">{{ getPokemonName(pokemonB) }}</h3>
+            <p class="pokemon-id">#{{ pokemonB?.id.toString().padStart(3, '0') }}</p>
+            <button @click="openManualSelector('B')" class="manual-select-btn">
+              🔍 手动选择
+            </button>
+          </div>
         </div>
       </div>
 
@@ -26,7 +35,7 @@
         <button 
           class="fusion-btn pixel-btn"
           @click="createFusion"
-          :disabled="isFusing"
+          :disabled="isFusing || !pokemonA || !pokemonB"
         >
           <span v-if="!isFusing">⚡ 融合 ⚡</span>
           <span v-else>融合中...</span>
@@ -56,7 +65,7 @@
               class="type-badge"
               :class="`type-${type}`"
             >
-              {{ getTypeChinese(type) }}
+              {{ type }}
             </span>
           </div>
           
@@ -65,7 +74,7 @@
             <h3>特性：</h3>
             <ul>
               <li v-for="ability in fusionResult.abilities" :key="ability">
-                {{ getAbilityChinese(ability) }}
+                {{ ability }}
               </li>
             </ul>
           </div>
@@ -78,21 +87,33 @@
       </div>
     </div>
 
+    <!-- 手动选择器弹窗 -->
+    <div v-if="showManualSelector" class="modal-overlay" @click="closeManualSelector">
+      <div class="modal-content" @click.stop>
+        <PokemonManualSelector
+          :target="currentTarget"
+          :is-open="showManualSelector"
+          @select="handleManualSelect"
+          @close="closeManualSelector"
+        />
+      </div>
+    </div>
+
     <!-- 加载动画 -->
     <div v-if="isFusing" class="loading-overlay">
       <div class="pixel-loading">加载中...</div>
     </div>
 
-  <!-- 成功动画 -->
-  <div v-if="showSuccess" class="success-animation">
-    <div class="confetti"></div>
-  </div>
+    <!-- 成功动画 -->
+    <div v-if="showSuccess" class="success-animation">
+      <div class="confetti"></div>
+    </div>
 
-  <!-- 用户提示 -->
-  <div class="user-tip">
-    <p>💡 页面底部有"🎭 彩蛋：用户照片融合"功能，可以上传你的照片与宝可梦融合！</p>
+    <!-- 用户提示 -->
+    <div class="user-tip">
+      <p>💡 页面底部有"🎭 彩蛋：用户照片融合"功能，可以上传你的照片与宝可梦融合！</p>
+    </div>
   </div>
-</div>
 </template>
 
 <script setup lang="ts">
@@ -102,11 +123,12 @@ import confetti from 'canvas-confetti';
 import Chart from 'chart.js/auto';
 import * as THREE from 'three';
 import { createPixelFusion } from '../utils/pixelFusion';
-import { getRandomPokemon, getTypeChinese, getAbilityChinese, getChineseName } from '../utils/pokemonApi';
 import { generateComplexFusionName } from '../utils/chinesePixelFont';
 import { CacheManager } from '../utils/cache';
 import { audioManager } from '../utils/audioManager';
-import type { Pokemon, FusionResult } from '../types';
+import PokemonManualSelector from './PokemonManualSelector.vue';
+import { getRandomPokemonPair, getRandomPokemon } from '../data/pokemonData';
+import type { Pokemon } from '../data/pokemonData';
 
 // 状态管理
 const showSplash = ref(true);
@@ -114,8 +136,10 @@ const isFusing = ref(false);
 const showSuccess = ref(false);
 const pokemonA = ref<Pokemon | null>(null);
 const pokemonB = ref<Pokemon | null>(null);
-const fusionResult = ref<FusionResult | null>(null);
+const fusionResult = ref<any>(null);
 const fusionSprite = ref<string>('');
+const showManualSelector = ref(false);
+const currentTarget = ref<'A' | 'B'>('A');
 
 // 引用
 const statsChart = ref<HTMLCanvasElement>();
@@ -146,19 +170,10 @@ async function startSplashAnimation() {
 // 加载随机宝可梦
 async function loadRandomPokemon() {
   try {
-    const [pokeA, pokeB] = await Promise.all([
-      getRandomPokemon(),
-      getRandomPokemon()
-    ]);
+    const [pokeA, pokeB] = getRandomPokemonPair();
     
     pokemonA.value = pokeA;
     pokemonB.value = pokeB;
-    
-    // 缓存宝可梦数据
-    await Promise.all([
-      CacheManager.cachePokemon(pokeA),
-      CacheManager.cachePokemon(pokeB)
-    ]);
     
     // 添加悬停动画
     nextTick(() => {
@@ -175,7 +190,13 @@ async function loadRandomPokemon() {
 // 获取宝可梦名称
 function getPokemonName(pokemon: Pokemon | null): string {
   if (!pokemon) return '加载中...';
-  return getChineseName(pokemon);
+  return pokemon.name;
+}
+
+// 获取宝可梦精灵图
+function getPokemonSprite(pokemon: Pokemon | null): string {
+  if (!pokemon) return '';
+  return `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${pokemon.id}.png`;
 }
 
 // 创建融合
@@ -188,24 +209,24 @@ async function createFusion() {
   try {
     // 创建融合精灵
     fusionSprite.value = await createPixelFusion(
-      pokemonA.value.sprites.front_default,
-      pokemonB.value.sprites.front_default
+      getPokemonSprite(pokemonA.value),
+      getPokemonSprite(pokemonB.value)
     );
     
-          // 生成融合结果
-          const fusion = {
-            id: `F${Date.now().toString(16).toUpperCase()}`,
-            name: generateComplexFusionName(getChineseName(pokemonA.value), getChineseName(pokemonB.value)),
-            pokemonA: pokemonA.value,
-            pokemonB: pokemonB.value,
-            fusedSprite: fusionSprite.value,
-            types: getRandomTypes(pokemonA.value, pokemonB.value),
-            abilities: getRandomAbilities(pokemonA.value, pokemonB.value),
-            height: Math.round((pokemonA.value.height + pokemonB.value.height) / 2),
-            weight: Math.round((pokemonA.value.weight + pokemonB.value.weight) / 2),
-            cryUrl: pokemonA.value.cries?.latest || '',
-            generation: Math.max(pokemonA.value.id, pokemonB.value.id)
-          };
+    // 生成融合结果
+    const fusion = {
+      id: `F${Date.now().toString(16).toUpperCase()}`,
+      name: generateComplexFusionName(pokemonA.value.name, pokemonB.value.name),
+      pokemonA: pokemonA.value,
+      pokemonB: pokemonB.value,
+      fusedSprite: fusionSprite.value,
+      types: getRandomTypes(pokemonA.value, pokemonB.value),
+      abilities: getRandomAbilities(pokemonA.value, pokemonB.value),
+      height: Math.round((pokemonA.value.height + pokemonB.value.height) / 2),
+      weight: Math.round((pokemonA.value.weight + pokemonB.value.weight) / 2),
+      cryUrl: '',
+      generation: Math.max(pokemonA.value.generation, pokemonB.value.generation)
+    };
     
     fusionResult.value = fusion;
     
@@ -229,8 +250,8 @@ async function createFusion() {
 
 // 获取随机类型
 function getRandomTypes(pokeA: Pokemon, pokeB: Pokemon): string[] {
-  const typesA = pokeA.types.map(t => t.type.name);
-  const typesB = pokeB.types.map(t => t.type.name);
+  const typesA = pokeA.type;
+  const typesB = pokeB.type;
   
   const allTypes = [...new Set([...typesA, ...typesB])];
   return allTypes.slice(0, 2);
@@ -238,11 +259,10 @@ function getRandomTypes(pokeA: Pokemon, pokeB: Pokemon): string[] {
 
 // 获取随机特性
 function getRandomAbilities(pokeA: Pokemon, pokeB: Pokemon): string[] {
-  const abilitiesA = pokeA.abilities.filter(a => !a.is_hidden).map(a => a.ability.name);
-  const abilitiesB = pokeB.abilities.filter(a => !a.is_hidden).map(a => a.ability.name);
-  
-  const allAbilities = [...new Set([...abilitiesA, ...abilitiesB])];
-  return allAbilities.slice(0, 2);
+  // 模拟特性
+  const abilities = ['茂盛', '猛火', '激流', '虫之预感', '静电', '威吓', '加速', '结实'];
+  const selected = abilities.slice(0, 2);
+  return selected;
 }
 
 // 创建雷达图
@@ -319,12 +339,33 @@ function showSuccessAnimation() {
 // 选择宝可梦
 async function selectPokemon(type: 'A' | 'B') {
   audioManager.playClickSound();
-  const newPokemon = await getRandomPokemon();
+  const newPokemon = getRandomPokemon();
   if (type === 'A') {
     pokemonA.value = newPokemon;
   } else {
     pokemonB.value = newPokemon;
   }
+}
+
+// 打开手动选择器
+function openManualSelector(target: 'A' | 'B') {
+  currentTarget.value = target;
+  showManualSelector.value = true;
+}
+
+// 关闭手动选择器
+function closeManualSelector() {
+  showManualSelector.value = false;
+}
+
+// 处理手动选择
+function handleManualSelect(pokemon: Pokemon, target: 'A' | 'B') {
+  if (target === 'A') {
+    pokemonA.value = pokemon;
+  } else {
+    pokemonB.value = pokemon;
+  }
+  closeManualSelector();
 }
 </script>
 
@@ -372,6 +413,12 @@ async function selectPokemon(type: 'A' | 'B') {
   gap: 20px;
 }
 
+.pokemon-section {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
 .pokemon-card {
   background: rgba(255, 255, 255, 0.9);
   border-radius: 10px;
@@ -406,6 +453,23 @@ async function selectPokemon(type: 'A' | 'B') {
   font-size: 14px;
   color: #666;
   font-weight: bold;
+}
+
+.manual-select-btn {
+  margin-top: 10px;
+  padding: 8px 16px;
+  background: #4ecdc4;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  font-family: 'Courier New', monospace;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.manual-select-btn:hover {
+  background: #45b7b8;
+  transform: translateY(-2px);
 }
 
 .hover-shake:hover {
@@ -510,24 +574,24 @@ async function selectPokemon(type: 'A' | 'B') {
   color: white;
 }
 
-.type-normal { background: #A8A878; }
-.type-fire { background: #F08030; }
-.type-water { background: #6890F0; }
-.type-electric { background: #F8D030; }
-.type-grass { background: #78C850; }
-.type-ice { background: #98D8D8; }
-.type-fighting { background: #C03028; }
-.type-poison { background: #A040A0; }
-.type-ground { background: #E0C068; }
-.type-flying { background: #A890F0; }
-.type-psychic { background: #F85888; }
-.type-bug { background: #A8B820; }
-.type-rock { background: #B8A038; }
-.type-ghost { background: #705898; }
-.type-dragon { background: #7038F8; }
-.type-dark { background: #705848; }
-.type-steel { background: #B8B8D0; }
-.type-fairy { background: #EE99AC; }
+.type-一般 { background: #A8A878; }
+.type-火 { background: #F08030; }
+.type-水 { background: #6890F0; }
+.type-电 { background: #F8D030; }
+.type-草 { background: #78C850; }
+.type-冰 { background: #98D8D8; }
+.type-格斗 { background: #C03028; }
+.type-毒 { background: #A040A0; }
+.type-地面 { background: #E0C068; }
+.type-飞行 { background: #A890F0; }
+.type-超能力 { background: #F85888; }
+.type-虫 { background: #A8B820; }
+.type-岩石 { background: #B8A038; }
+.type-幽灵 { background: #705898; }
+.type-龙 { background: #7038F8; }
+.type-恶 { background: #705848; }
+.type-钢 { background: #B8B8D0; }
+.type-妖精 { background: #EE99AC; }
 
 .abilities {
   margin-bottom: 20px;
@@ -586,6 +650,43 @@ async function selectPokemon(type: 'A' | 'B') {
   height: 100%;
   pointer-events: none;
   z-index: 998;
+}
+
+/* 模态框样式 */
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1001;
+}
+
+.modal-content {
+  background: white;
+  border-radius: 15px;
+  max-width: 90%;
+  max-height: 90%;
+  overflow-y: auto;
+}
+
+.user-tip {
+  position: fixed;
+  bottom: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: rgba(0, 0, 0, 0.8);
+  color: white;
+  padding: 15px 20px;
+  border-radius: 25px;
+  font-family: 'Courier New', monospace;
+  font-size: 14px;
+  text-align: center;
+  z-index: 100;
 }
 
 @media (max-width: 768px) {

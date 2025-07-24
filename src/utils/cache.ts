@@ -116,6 +116,15 @@ export class ImageCache {
 
   static async cacheImage(url: string, response: Response) {
     try {
+      // 跳过扩展协议的URL
+      const urlObj = new URL(url);
+      if (urlObj.protocol === 'chrome-extension:' || 
+          urlObj.protocol === 'moz-extension:' || 
+          urlObj.protocol === 'safari-extension:' ||
+          urlObj.protocol === 'edge-extension:') {
+        return;
+      }
+
       const cache = await caches.open(`${this.CACHE_NAME}-${this.CACHE_VERSION}`);
       await cache.put(url, response);
     } catch (error) {
@@ -125,6 +134,15 @@ export class ImageCache {
 
   static async getCachedImage(url: string): Promise<Response | undefined> {
     try {
+      // 跳过扩展协议的URL
+      const urlObj = new URL(url);
+      if (urlObj.protocol === 'chrome-extension:' || 
+          urlObj.protocol === 'moz-extension:' || 
+          urlObj.protocol === 'safari-extension:' ||
+          urlObj.protocol === 'edge-extension:') {
+        return undefined;
+      }
+
       const cache = await caches.open(`${this.CACHE_NAME}-${this.CACHE_VERSION}`);
       return await cache.match(url);
     } catch (error) {
@@ -135,6 +153,15 @@ export class ImageCache {
 
   static async cacheBase64Image(url: string, base64Data: string) {
     try {
+      // 跳过扩展协议的URL
+      const urlObj = new URL(url);
+      if (urlObj.protocol === 'chrome-extension:' || 
+          urlObj.protocol === 'moz-extension:' || 
+          urlObj.protocol === 'safari-extension:' ||
+          urlObj.protocol === 'edge-extension:') {
+        return;
+      }
+
       const response = new Response(base64Data);
       await this.cacheImage(url, response);
     } catch (error) {
@@ -150,12 +177,36 @@ export async function initCache() {
     if ('serviceWorker' in navigator) {
       window.addEventListener('load', async () => {
         try {
-          await navigator.serviceWorker.register('/sw.js');
-          console.log('Service Worker 注册成功');
+          const registration = await navigator.serviceWorker.register('/sw.js', {
+            scope: '/'
+          });
+          
+          console.log('Service Worker 注册成功:', registration);
+          
+          // 监听更新
+          registration.addEventListener('updatefound', () => {
+            const newWorker = registration.installing;
+            if (newWorker) {
+              newWorker.addEventListener('statechange', () => {
+                if (newWorker.state === 'installed' && navigator.serviceWorker.controller) {
+                  console.log('新的Service Worker已安装');
+                }
+              });
+            }
+          });
+          
         } catch (error) {
           console.error('Service Worker 注册失败:', error);
         }
       });
+      
+      // 监听Service Worker消息
+      navigator.serviceWorker.addEventListener('message', (event) => {
+        console.log('收到Service Worker消息:', event.data);
+      });
+      
+    } else {
+      console.warn('当前浏览器不支持Service Worker');
     }
 
     // 预加载常用宝可梦
