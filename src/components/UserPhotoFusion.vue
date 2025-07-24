@@ -17,13 +17,82 @@
       <div v-if="userPhoto" class="preview-section">
         <img :src="userPhoto" alt="用户照片" class="user-photo-preview" />
         
-        <select v-model="selectedPokemon" class="pokemon-select">
-          <option value="">选择要融合的宝可梦</option>
-          <option v-for="pokemon in availablePokemon" :key="pokemon.id" :value="pokemon">
-            {{ getChineseName(pokemon) }}
-          </option>
-        </select>
-        
+        <!-- 手动选择宝可梦区域 -->
+        <div class="pokemon-selection">
+          <h4>🎯 选择要融合的宝可梦</h4>
+          
+          <!-- 搜索和筛选 -->
+          <div class="selection-controls">
+            <input 
+              v-model="searchQuery" 
+              @input="handleSearch"
+              placeholder="搜索宝可梦名称..."
+              class="search-input"
+            />
+            <select v-model="selectedGeneration" @change="filterByGeneration" class="gen-select">
+              <option value="">所有世代</option>
+              <option value="1">第1世代</option>
+              <option value="2">第2世代</option>
+              <option value="3">第3世代</option>
+            </select>
+            <button @click="selectRandomPokemon" class="random-btn">
+              🎲 随机选择
+            </button>
+          </div>
+
+          <!-- 宝可梦列表 -->
+          <div class="pokemon-grid">
+            <div 
+              v-for="pokemon in displayedPokemon" 
+              :key="pokemon.id"
+              class="pokemon-option"
+              :class="{ selected: selectedPokemon?.id === pokemon.id }"
+              @click="selectPokemon(pokemon)"
+            >
+              <img 
+                :src="`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${pokemon.id}.png`" 
+                :alt="pokemon.name"
+                class="pokemon-sprite"
+              />
+              <div class="pokemon-info">
+                <span class="pokemon-number">#{{ pokemon.id.toString().padStart(3, '0') }}</span>
+                <span class="pokemon-name">{{ pokemon.name }}</span>
+                <div class="pokemon-types">
+                  <span 
+                    v-for="type in pokemon.type" 
+                    :key="type"
+                    class="type-badge"
+                    :class="`type-${type}`"
+                  >
+                    {{ type }}
+                  </span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- 分页 -->
+          <div v-if="totalPages > 1" class="pagination">
+            <button 
+              @click="previousPage" 
+              :disabled="currentPage === 1"
+              class="page-btn"
+            >
+              上一页
+            </button>
+            <span class="page-info">
+              {{ currentPage }} / {{ totalPages }}
+            </span>
+            <button 
+              @click="nextPage" 
+              :disabled="currentPage === totalPages"
+              class="page-btn"
+            >
+              下一页
+            </button>
+          </div>
+        </div>
+
         <input 
           v-model="fusionName" 
           type="text" 
@@ -64,10 +133,10 @@
 </template>
 
 <script setup lang="ts">
-import { ref, computed } from 'vue';
+import { ref, computed, onMounted } from 'vue';
 import { createUserPokemonFusion, saveFusionImage } from '../utils/userPhotoFusion';
-import { getChineseName } from '../utils/pokemonApi';
-import type { Pokemon } from '../types';
+import { pokemonData } from '../data/pokemonData';
+import type { Pokemon } from '../data/pokemonData';
 
 // 状态
 const fileInput = ref<HTMLInputElement>();
@@ -76,22 +145,54 @@ const selectedPokemon = ref<Pokemon | null>(null);
 const fusionResult = ref<string>('');
 const isFusing = ref(false);
 const fusionName = ref<string>('');
+const searchQuery = ref('');
+const selectedGeneration = ref('');
+const currentPage = ref(1);
+const itemsPerPage = 8;
 
-// 模拟可用宝可梦
-const availablePokemon = ref<Pokemon[]>([]);
-
-// 生成的融合名称
+// 计算属性
 const generatedName = computed(() => {
   if (!selectedPokemon.value || !fusionName.value) return '';
-  return `${fusionName.value}·${getChineseName(selectedPokemon.value)}`;
+  return `${fusionName.value}·${selectedPokemon.value.name}`;
 });
 
-// 触发文件上传
+const filteredPokemon = computed(() => {
+  let filtered = pokemonData;
+
+  // 文本搜索
+  if (searchQuery.value.trim()) {
+    const query = searchQuery.value.toLowerCase();
+    filtered = filtered.filter(pokemon => 
+      pokemon.name.toLowerCase().includes(query) || 
+      pokemon.english.toLowerCase().includes(query) || 
+      pokemon.id.toString() === query
+    );
+  }
+
+  // 世代筛选
+  if (selectedGeneration.value) {
+    const gen = parseInt(selectedGeneration.value);
+    filtered = filtered.filter(pokemon => pokemon.generation === gen);
+  }
+
+  return filtered;
+});
+
+const totalPages = computed(() => 
+  Math.ceil(filteredPokemon.value.length / itemsPerPage)
+);
+
+const displayedPokemon = computed(() => {
+  const start = (currentPage.value - 1) * itemsPerPage;
+  const end = start + itemsPerPage;
+  return filteredPokemon.value.slice(start, end);
+});
+
+// 方法
 const triggerFileUpload = () => {
   fileInput.value?.click();
 };
 
-// 处理文件上传
 const handleFileUpload = (event: Event) => {
   const target = event.target as HTMLInputElement;
   const file = target.files?.[0];
@@ -105,7 +206,23 @@ const handleFileUpload = (event: Event) => {
   }
 };
 
-// 创建用户融合
+const handleSearch = () => {
+  currentPage.value = 1;
+};
+
+const filterByGeneration = () => {
+  currentPage.value = 1;
+};
+
+const selectRandomPokemon = () => {
+  const randomIndex = Math.floor(Math.random() * filteredPokemon.value.length);
+  selectedPokemon.value = filteredPokemon.value[randomIndex];
+};
+
+const selectPokemon = (pokemon: Pokemon) => {
+  selectedPokemon.value = pokemon;
+};
+
 const createUserFusion = async () => {
   if (!userPhoto.value || !selectedPokemon.value || !fusionName.value) return;
   
@@ -114,7 +231,7 @@ const createUserFusion = async () => {
   try {
     fusionResult.value = await createUserPokemonFusion(
       userPhoto.value,
-      selectedPokemon.value.sprites.front_default,
+      `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${selectedPokemon.value.id}.png`,
       {
         intensity: 0.8,
         preserveDetails: true
@@ -127,16 +244,14 @@ const createUserFusion = async () => {
   }
 };
 
-// 保存结果
 const saveResult = () => {
   if (!fusionResult.value || !selectedPokemon.value) return;
   
   const timestamp = new Date().toISOString().slice(0, 19).replace(/:/g, '-');
-  const filename = `${fusionName.value}-${getChineseName(selectedPokemon.value)}-${timestamp}.png`;
+  const filename = `${fusionName.value}-${selectedPokemon.value.name}-${timestamp}.png`;
   saveFusionImage(fusionResult.value, filename);
 };
 
-// 分享结果
 const shareResult = async () => {
   if (!fusionResult.value || !selectedPokemon.value) return;
   
@@ -147,7 +262,7 @@ const shareResult = async () => {
     if (navigator.share && navigator.canShare({ files: [new File([blob], 'fusion.png', { type: 'image/png' })] })) {
       await navigator.share({
         title: '我的宝可梦融合',
-        text: `我用 ${getChineseName(selectedPokemon.value)} 创造了 ${fusionName.value}！`,
+        text: `我用 ${selectedPokemon.value.name} 创造了 ${fusionName.value}！`,
         files: [new File([blob], 'fusion.png', { type: 'image/png' })]
       });
     } else {
@@ -159,201 +274,29 @@ const shareResult = async () => {
   }
 };
 
-// 重置
 const reset = () => {
   userPhoto.value = '';
   selectedPokemon.value = null;
   fusionResult.value = '';
   fusionName.value = '';
+  searchQuery.value = '';
+  selectedGeneration.value = '';
+  currentPage.value = 1;
 };
 
-// 加载示例宝可梦
-const loadSamplePokemon = async () => {
-  try {
-    const { getRandomPokemon } = await import('../utils/pokemonApi');
-    const promises = [];
-    for (let i = 0; i < 12; i++) {
-      promises.push(getRandomPokemon());
-    }
-    availablePokemon.value = await Promise.all(promises);
-  } catch (error) {
-    console.error('加载示例宝可梦失败:', error);
+const previousPage = () => {
+  if (currentPage.value > 1) {
+    currentPage.value--;
   }
 };
 
-loadSamplePokemon();
+const nextPage = () => {
+  if (currentPage.value < totalPages.value) {
+    currentPage.value++;
+  }
+};
+
+onMounted(() => {
+  // 初始化
+});
 </script>
-
-<style scoped>
-.user-photo-fusion {
-  background: rgba(255, 255, 255, 0.1);
-  border: 2px solid #ff6b6b;
-  border-radius: 12px;
-  padding: 20px;
-  margin: 20px 0;
-}
-
-.pixel-title {
-  font-family: 'Courier New', monospace;
-  color: #ff6b6b;
-  text-align: center;
-  margin-bottom: 20px;
-  text-shadow: 2px 2px 0px rgba(0,0,0,0.5);
-}
-
-.upload-section {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 20px;
-}
-
-.hidden-input {
-  display: none;
-}
-
-.upload-btn {
-  background: #4ecdc4;
-  color: white;
-  padding: 15px 30px;
-  font-size: 16px;
-  border: none;
-  border-radius: 8px;
-  cursor: pointer;
-  transition: all 0.3s ease;
-}
-
-.upload-btn:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 4px 12px rgba(0,0,0,0.3);
-}
-
-.preview-section {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 15px;
-}
-
-.user-photo-preview {
-  width: 150px;
-  height: 150px;
-  object-fit: cover;
-  border-radius: 8px;
-  border: 2px solid #fff;
-  image-rendering: pixelated;
-}
-
-.pokemon-select {
-  padding: 10px;
-  border: 2px solid #ff6b6b;
-  border-radius: 8px;
-  background: rgba(0, 0, 0, 0.8);
-  color: white;
-  font-family: monospace;
-  min-width: 200px;
-}
-
-.name-input {
-  padding: 10px;
-  border: 2px solid #ff6b6b;
-  border-radius: 8px;
-  background: rgba(0, 0, 0, 0.8);
-  color: white;
-  font-family: monospace;
-  min-width: 200px;
-  text-align: center;
-}
-
-.fusion-btn {
-  background: #ff6b6b;
-  color: white;
-  padding: 12px 25px;
-  border: none;
-  border-radius: 8px;
-  cursor: pointer;
-  transition: all 0.3s ease;
-}
-
-.fusion-btn:hover:not(:disabled) {
-  transform: translateY(-2px);
-  box-shadow: 0 4px 12px rgba(0,0,0,0.3);
-}
-
-.fusion-btn:disabled {
-  opacity: 0.6;
-  cursor: not-allowed;
-}
-
-.result-section {
-  text-align: center;
-}
-
-.fusion-name-display {
-  font-family: 'ZCOOL QingKe HuangYou', monospace;
-  font-size: 24px;
-  color: #ff6b6b;
-  margin: 10px 0;
-  text-shadow: 2px 2px 0px rgba(0,0,0,0.5);
-}
-
-.fusion-result-img {
-  width: 256px;
-  height: 256px;
-  image-rendering: pixelated;
-  border: 3px solid #fff;
-  border-radius: 12px;
-  margin: 10px 0;
-}
-
-.share-section {
-  display: flex;
-  gap: 10px;
-  justify-content: center;
-  flex-wrap: wrap;
-}
-
-.save-btn, .share-btn, .reset-btn {
-  color: white;
-  padding: 10px 20px;
-  border: none;
-  border-radius: 8px;
-  cursor: pointer;
-  transition: all 0.3s ease;
-  font-size: 14px;
-}
-
-.save-btn {
-  background: #27ae60;
-}
-
-.share-btn {
-  background: #9b59b6;
-}
-
-.reset-btn {
-  background: #e74c3c;
-}
-
-.save-btn:hover, .share-btn:hover, .reset-btn:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 4px 12px rgba(0,0,0,0.3);
-}
-
-@media (max-width: 768px) {
-  .user-photo-preview {
-    width: 120px;
-    height: 120px;
-  }
-  
-  .fusion-result-img {
-    width: 200px;
-    height: 200px;
-  }
-  
-  .share-section {
-    flex-direction: column;
-    align-items: center;
-  }
-}
-</style>

@@ -2,7 +2,7 @@
 import { sampleSize } from 'lodash-es';
 
 // 融合配置
-interface FusionConfig {
+export interface FusionConfig {
   shapeSource: 'first' | 'second' | 'blend';
   colorSource: 'first' | 'second' | 'blend';
   pixelSize: number;

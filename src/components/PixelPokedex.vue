@@ -110,8 +110,9 @@
     </div>
 
     <!-- 用户提示 -->
-    <div class="user-tip">
+    <div class="user-tip" v-if="showUserTip">
       <p>💡 页面底部有"🎭 彩蛋：用户照片融合"功能，可以上传你的照片与宝可梦融合！</p>
+      <button class="close-tip" @click="closeUserTip">×</button>
     </div>
   </div>
 </template>
@@ -140,6 +141,7 @@ const fusionResult = ref<any>(null);
 const fusionSprite = ref<string>('');
 const showManualSelector = ref(false);
 const currentTarget = ref<'A' | 'B'>('A');
+const showUserTip = ref(true);
 
 // 引用
 const statsChart = ref<HTMLCanvasElement>();
@@ -222,10 +224,10 @@ async function createFusion() {
       fusedSprite: fusionSprite.value,
       types: getRandomTypes(pokemonA.value, pokemonB.value),
       abilities: getRandomAbilities(pokemonA.value, pokemonB.value),
-      height: Math.round((pokemonA.value.height + pokemonB.value.height) / 2),
-      weight: Math.round((pokemonA.value.weight + pokemonB.value.weight) / 2),
+      height: Math.round(((pokemonA.value.height || 0) + (pokemonB.value.height || 0)) / 2),
+      weight: Math.round(((pokemonA.value.weight || 0) + (pokemonB.value.weight || 0)) / 2),
       cryUrl: '',
-      generation: Math.max(pokemonA.value.generation, pokemonB.value.generation)
+      generation: Math.max(pokemonA.value.generation || 1, pokemonB.value.generation || 1)
     };
     
     fusionResult.value = fusion;
@@ -366,6 +368,11 @@ function handleManualSelect(pokemon: Pokemon, target: 'A' | 'B') {
     pokemonB.value = pokemon;
   }
   closeManualSelector();
+}
+
+// 关闭用户提示
+function closeUserTip() {
+  showUserTip.value = false;
 }
 </script>
 
@@ -687,6 +694,29 @@ function handleManualSelect(pokemon: Pokemon, target: 'A' | 'B') {
   font-size: 14px;
   text-align: center;
   z-index: 100;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.close-tip {
+  background: none;
+  border: none;
+  color: white;
+  font-size: 20px;
+  cursor: pointer;
+  padding: 0;
+  width: 24px;
+  height: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  transition: background-color 0.2s;
+}
+
+.close-tip:hover {
+  background-color: rgba(255, 255, 255, 0.2);
 }
 
 @media (max-width: 768px) {
