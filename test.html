@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>像素宝可梦融合器 - 测试页面</title>
+    <style>
+        body {
+            font-family: 'ZCOOL QingKe HuangYou', 'Courier New', monospace;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            margin: 0;
+            padding: 20px;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .test-container {
+            background: rgba(255, 255, 255, 0.9);
+            border-radius: 20px;
+            padding: 40px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            text-align: center;
+            max-width: 600px;
+        }
+        
+        .pixel-title {
+            font-size: 32px;
+            color: #ff6b6b;
+            text-shadow: 2px 2px 0px rgba(0,0,0,0.5);
+            margin-bottom: 30px;
+        }
+        
+        .test-links {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+        
+        .test-btn {
+            background: #ff6b6b;
+            color: white;
+            padding: 15px 30px;
+            border: none;
+            border-radius: 8px;
+            font-size: 18px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-block;
+        }
+        
+        .test-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+        }
+        
+        .features {
+            margin-top: 30px;
+            text-align: left;
+        }
+        
+        .features h3 {
+            color: #333;
+            margin-bottom: 15px;
+        }
+        
+        .features ul {
+            color: #666;
+            line-height: 1.8;
+        }
+    </style>
+</head>
+<body>
+    <div class="test-container">
+        <h1 class="pixel-title">🎮 像素宝可梦融合器</h1>
+        
+        <div class="test-links">
+            <a href="http://localhost:3000" class="test-btn" target="_blank">
+                🚀 启动开发服务器
+            </a>
+            <a href="dist/index.html" class="test-btn" target="_blank">
+                📦 查看构建版本
+            </a>
+        </div>
+        
+        <div class="features">
+            <h3>✨ 核心功能</h3>
+            <ul>
+                <li>🎯 一键生成随机宝可梦融合</li>
+                <li>🎨 像素级高质量渲染</li>
+                <li>🇨🇳 完整中文支持</li>
+                <li>📱 响应式设计</li>
+                <li>🎭 用户照片融合彩蛋</li>
+                <li>💾 离线缓存支持</li>
+            </ul>
+        </div>
+        
+        <div class="features">
+            <h3>🛠️ 开发命令</h3>
+            <ul>
+                <li><code>npm run dev</code> - 启动开发服务器</li>
+                <li><code>npm run build</code> - 构建生产版本</li>
+                <li><code>npm run preview</code> - 预览构建结果</li>
+                <li><code>npm run deploy</code> - 部署到GitHub Pages</li>
+            </ul>
+        </div>
+    </div>
+</body>
+</html>
