@@ -168,8 +168,8 @@
 <script setup lang="ts">
 import { ref, computed, onMounted } from 'vue';
 import { createUserPokemonFusion, saveFusionImage } from '../utils/userPhotoFusion';
-import { pokemonData } from '../data/pokemonData';
-import type { Pokemon } from '../data/pokemonData';
+import { getAllPokemon } from '../data/pokemonData';
+import type { Pokemon } from '../types/pokemon';
 
 // 状态
 const fileInput = ref<HTMLInputElement>();
@@ -183,6 +183,9 @@ const selectedGeneration = ref('');
 const currentPage = ref(1);
 const itemsPerPage = 12;
 
+// 获取所有宝可梦
+const allPokemon = computed(() => getAllPokemon());
+
 // 计算属性
 const generatedName = computed(() => {
   if (!selectedPokemon.value || !fusionName.value) return '';
@@ -190,12 +193,12 @@ const generatedName = computed(() => {
 });
 
 const filteredPokemon = computed(() => {
-  let filtered = pokemonData;
+  let filtered = allPokemon.value;
 
   // 文本搜索
   if (searchQuery.value.trim()) {
     const query = searchQuery.value.toLowerCase();
-    filtered = filtered.filter(pokemon => 
+    filtered = filtered.filter((pokemon: Pokemon) => 
       pokemon.name.toLowerCase().includes(query) || 
       pokemon.english.toLowerCase().includes(query) || 
       pokemon.id.toString() === query
@@ -205,7 +208,7 @@ const filteredPokemon = computed(() => {
   // 世代筛选
   if (selectedGeneration.value) {
     const gen = parseInt(selectedGeneration.value);
-    filtered = filtered.filter(pokemon => pokemon.generation === gen);
+    filtered = filtered.filter((pokemon: Pokemon) => pokemon.generation === gen);
   }
 
   return filtered;

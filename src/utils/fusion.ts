@@ -44,23 +44,15 @@ export async function fusePokemonSprites(
     // 创建融合图像
     const fused = new Jimp(size, size);
 
-    // 使用tracking.js类似的特征点检测逻辑
-    // 这里简化实现：使用形状遮罩进行融合
-    const mask = createShapeMask(img1);
+    // 使用增强版融合算法
+    const { EnhancedFusion } = await import('./fusion-enhanced');
     
-    // 将第二张图片的颜色应用到第一张图片的形状上
-    img1.scan(0, 0, img1.bitmap.width, img1.bitmap.height, function(x: number, y: number, idx: number) {
-      const alpha = img1.bitmap.data[idx + 3];
-      if (alpha > 128) { // 非透明像素
-        const color = img2.getPixelColor(x, y);
-        fused.setPixelColor(color, x, y);
-      }
+    return await EnhancedFusion.fusePokemon(sprite1Url, sprite2Url, {
+      preserveShape: true,
+      colorTransfer: true,
+      edgeSmoothing: true,
+      pixelSize: 2
     });
-
-    // 应用像素化效果
-    const pixelated = applyPixelation(fused, 8);
-    
-    return await pixelated.getBase64Async('image/png');
   } catch (error) {
     console.error('融合图片失败:', error);
     throw error;
@@ -180,28 +172,13 @@ export async function fuseUserImageWithPokemon(
   pokemonSpriteUrl: string
 ): Promise<string> {
   try {
-    const [userImg, pokemonImg] = await Promise.all([
-      Jimp.read(userImageUrl),
-      Jimp.read(pokemonSpriteUrl)
-    ]);
-
-    const size = 512;
-    userImg.resize(size, size);
-    pokemonImg.resize(size, size);
-
-    // 创建融合图像，使用宝可梦形状，用户图片颜色
-    const fused = new Jimp(size, size);
+    const { UserImageFusion } = await import('./fusion-enhanced');
     
-    // 使用宝可梦作为形状遮罩
-    pokemonImg.scan(0, 0, pokemonImg.bitmap.width, pokemonImg.bitmap.height, function(x: number, y: number, idx: number) {
-      const alpha = pokemonImg.bitmap.data[idx + 3];
-      if (alpha > 128) {
-        const userColor = userImg.getPixelColor(x, y);
-        fused.setPixelColor(userColor, x, y);
-      }
+    return await UserImageFusion.fuseUserWithPokemon(userImageUrl, pokemonSpriteUrl, {
+      preserveOutline: true,
+      colorTransfer: true,
+      edgeDetection: true
     });
-
-    return await fused.getBase64Async(Jimp.MIME_PNG);
   } catch (error) {
     console.error('用户图片融合失败:', error);
     throw error;

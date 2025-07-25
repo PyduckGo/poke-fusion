@@ -117,7 +117,7 @@
 
 <script setup lang="ts">
 import { ref, computed, onMounted } from 'vue';
-import { pokemonData, getAllTypes } from '../data/pokemonData';
+import { pokemonDataArray as pokemonData, getAllTypes } from '../data/pokemonData';
 
 interface Pokemon {
   id: number;

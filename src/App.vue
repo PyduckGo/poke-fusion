@@ -1,13 +1,44 @@
 <template>
   <div id="app">
-    <PixelPokedex />
-    <UserPhotoFusion />
+    <nav class="app-nav">
+      <button 
+        class="nav-btn" 
+        :class="{ active: currentView === 'pokedex' }"
+        @click="currentView = 'pokedex'"
+      >
+        像素图鉴
+      </button>
+      <button 
+        class="nav-btn" 
+        :class="{ active: currentView === 'hybrid' }"
+        @click="currentView = 'hybrid'"
+      >
+        杂交实验室
+      </button>
+      <button 
+        class="nav-btn" 
+        :class="{ active: currentView === 'user' }"
+        @click="currentView = 'user'"
+      >
+        用户融合
+      </button>
+    </nav>
+
+    <div class="content">
+      <PixelPokedex v-if="currentView === 'pokedex'" />
+      <HybridPokedex v-if="currentView === 'hybrid'" />
+      <UserPhotoFusion v-if="currentView === 'user'" />
+    </div>
   </div>
 </template>
 
 <script setup lang="ts">
+import { ref } from 'vue';
 import PixelPokedex from './components/PixelPokedex.vue';
+import HybridPokedex from './components/HybridPokedex.vue';
 import UserPhotoFusion from './components/UserPhotoFusion.vue';
+
+const currentView = ref<'pokedex' | 'hybrid' | 'user'>('pokedex');
 </script>
 
 <style>
@@ -21,6 +52,41 @@ import UserPhotoFusion from './components/UserPhotoFusion.vue';
   background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
   min-height: 100vh;
   overflow-x: hidden;
+}
+
+.app-nav {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+  padding: 20px;
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(10px);
+}
+
+.nav-btn {
+  padding: 15px 30px;
+  font-size: 16px;
+  background: rgba(255, 255, 255, 0.2);
+  color: white;
+  border: 2px solid transparent;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: all 0.3s;
+  font-family: 'Courier New', monospace;
+}
+
+.nav-btn:hover {
+  background: rgba(255, 255, 255, 0.3);
+  transform: translateY(-2px);
+}
+
+.nav-btn.active {
+  background: #ff6b6b;
+  border-color: #ff6b6b;
+}
+
+.content {
+  padding: 20px;
 }
 
 /* 确保所有图片像素化 */
@@ -41,6 +107,15 @@ img {
 @media (max-width: 768px) {
   .pixel-container {
     padding: 10px;
+  }
+  
+  .app-nav {
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  .nav-btn {
+    width: 200px;
   }
 }
 </style>

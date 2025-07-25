@@ -1,111 +1,68 @@
-// 宝可梦数据 - 基于pokemon.json的完整TypeScript版本
-import pokemonJson from './pokemon.json';
+import pokemonData from './pokemon.json';
+import type { Pokemon } from '../types/pokemon';
 
-export interface Pokemon {
-  id: number;
-  name: string;
-  english: string;
-  type: string[];
-  generation: number;
-  height?: number;
-  weight?: number;
+// 获取所有宝可梦
+export function getAllPokemon(): Pokemon[] {
+  return pokemonData as Pokemon[];
 }
 
-// 使用完整的JSON数据
-export const pokemonData: Pokemon[] = pokemonJson.map(p => ({
-  ...p,
-  height: Math.floor(Math.random() * 200) + 50,
-  weight: Math.floor(Math.random() * 1000) + 50
-}));
+// 获取随机宝可梦
+export function getRandomPokemon(): Pokemon {
+  const pokemon = pokemonData as Pokemon[];
+  const randomIndex = Math.floor(Math.random() * pokemon.length);
+  return pokemon[randomIndex];
+}
 
-// 搜索函数
-export const searchPokemon = (query: string, typeFilter?: string, idRange?: { min: number; max: number }) => {
-  let results = pokemonData;
-
-  // 文本搜索
-  if (query.trim()) {
-    const lowerQuery = query.toLowerCase();
-    results = results.filter(pokemon => 
-      pokemon.name.toLowerCase().includes(lowerQuery) || 
-      pokemon.english.toLowerCase().includes(lowerQuery) || 
-      pokemon.id.toString() === query
-    );
+// 获取随机宝可梦对
+export function getRandomPokemonPair(): [Pokemon, Pokemon] {
+  const pokemon = pokemonData as Pokemon[];
+  const indices = new Set<number>();
+  
+  while (indices.size < 2) {
+    indices.add(Math.floor(Math.random() * pokemon.length));
   }
+  
+  const [index1, index2] = Array.from(indices);
+  return [pokemon[index1], pokemon[index2]];
+}
 
-  // 类型筛选
-  if (typeFilter) {
-    results = results.filter(pokemon => pokemon.type.includes(typeFilter));
-  }
+// 按世代获取宝可梦
+export function getPokemonByGeneration(generation: number): Pokemon[] {
+  return (pokemonData as Pokemon[]).filter(p => p.generation === generation);
+}
 
-  // ID范围筛选
-  if (idRange) {
-    results = results.filter(pokemon => 
-      pokemon.id >= idRange.min && pokemon.id <= idRange.max
-    );
-  }
+// 按类型搜索宝可梦
+export function searchPokemonByType(type: string): Pokemon[] {
+  return (pokemonData as Pokemon[]).filter(p => p.type.includes(type));
+}
 
-  return results;
-};
+// 按ID获取宝可梦
+export function getPokemonById(id: number): Pokemon | undefined {
+  return (pokemonData as Pokemon[]).find(p => p.id === id);
+}
 
-// 根据ID获取宝可梦
-export const getPokemonById = (id: number): Pokemon | undefined => {
-  return pokemonData.find(pokemon => pokemon.id === id);
-};
-
-// 根据名称获取宝可梦
-export const getPokemonByName = (name: string): Pokemon | undefined => {
-  const lowerName = name.toLowerCase();
-  return pokemonData.find(pokemon => 
-    pokemon.name.toLowerCase() === lowerName || 
-    pokemon.english.toLowerCase() === lowerName
+// 按名称搜索宝可梦
+export function searchPokemonByName(name: string): Pokemon[] {
+  const query = name.toLowerCase();
+  return (pokemonData as Pokemon[]).filter(p => 
+    p.name.toLowerCase().includes(query) ||
+    p.english.toLowerCase().includes(query)
   );
-};
+}
+
+// 获取前三个世代的宝可梦
+export function getFirstThreeGenerations(): Pokemon[] {
+  return (pokemonData as Pokemon[]).filter(p => p.generation <= 3);
+}
 
 // 获取所有类型
-export const getAllTypes = (): string[] => {
-  const types = new Set<string>();
-  pokemonData.forEach(pokemon => {
-    pokemon.type.forEach(type => types.add(type));
+export function getAllTypes(): string[] {
+  const typesSet = new Set<string>();
+  (pokemonData as Pokemon[]).forEach(pokemon => {
+    pokemon.type.forEach(type => typesSet.add(type));
   });
-  return Array.from(types).sort();
-};
+  return Array.from(typesSet).sort();
+}
 
-// 获取ID范围
-export const getIdRange = (): { min: number; max: number } => {
-  const ids = pokemonData.map(p => p.id);
-  return {
-    min: Math.min(...ids),
-    max: Math.max(...ids)
-  };
-};
-
-// 获取特定世代的宝可梦
-export const getPokemonByGeneration = (generation: number): Pokemon[] => {
-  return pokemonData.filter(pokemon => pokemon.generation === generation);
-};
-
-// 获取随机宝可梦
-export const getRandomPokemon = (): Pokemon => {
-  const randomIndex = Math.floor(Math.random() * pokemonData.length);
-  return pokemonData[randomIndex];
-};
-
-// 获取两只不同世代的随机宝可梦
-export const getRandomPokemonPair = (): [Pokemon, Pokemon] => {
-  const generations = [1, 2, 3];
-  const gen1 = generations[Math.floor(Math.random() * generations.length)];
-  let gen2 = generations[Math.floor(Math.random() * generations.length)];
-  
-  // 确保不同世代
-  while (gen2 === gen1) {
-    gen2 = generations[Math.floor(Math.random() * generations.length)];
-  }
-  
-  const gen1Pokemon = getPokemonByGeneration(gen1);
-  const gen2Pokemon = getPokemonByGeneration(gen2);
-  
-  const pokemon1 = gen1Pokemon[Math.floor(Math.random() * gen1Pokemon.length)];
-  const pokemon2 = gen2Pokemon[Math.floor(Math.random() * gen2Pokemon.length)];
-  
-  return [pokemon1, pokemon2];
-};
+// 导出宝可梦数据数组
+export const pokemonDataArray = pokemonData as Pokemon[];
