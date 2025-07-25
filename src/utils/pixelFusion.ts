@@ -1,4 +1,5 @@
 // 像素级宝可梦融合算法 - 使用Canvas API进行高质量像素融合
+// 参考alexonsager风格的融合实现
 import { sampleSize } from 'lodash-es';
 
 // 融合配置
@@ -7,20 +8,22 @@ export interface FusionConfig {
   colorSource: 'first' | 'second' | 'blend';
   pixelSize: number;
   outline: boolean;
+  faceSwap: boolean; // 新增面部替换功能
 }
 
-// 默认配置
+// 默认配置 - 优化为alexonsager风格
 const defaultConfig: FusionConfig = {
-  shapeSource: 'first',
-  colorSource: 'second',
+  shapeSource: 'first',  // 第一个宝可梦提供形状和轮廓
+  colorSource: 'second', // 第二个宝可梦提供颜色填充
   pixelSize: 1,
-  outline: true
+  outline: true,
+  faceSwap: true         // 启用面部替换
 };
 
 /**
- * 使用Canvas创建像素级融合精灵 - 改进版
- * @param spriteUrlA 第一只宝可梦图片URL
- * @param spriteUrlB 第二只宝可梦图片URL
+ * 使用Canvas创建像素级融合精灵 - alexonsager风格
+ * @param spriteUrlA 第一个宝可梦图片URL（提供形状和轮廓）
+ * @param spriteUrlB 第二个宝可梦图片URL（提供颜色和面部）
  * @param config 融合配置
  * @returns 融合后的base64图片
  */
@@ -99,105 +102,72 @@ export async function createPixelFusion(
           // 创建输出图像数据
           const outputData = ctx.createImageData(512, 512);
           
-          // 逐像素处理 - 使用形状+颜色融合算法
+          // alexonsager风格融合算法
           for (let y = 0; y < 512; y += finalConfig.pixelSize) {
             for (let x = 0; x < 512; x += finalConfig.pixelSize) {
               const index = (y * 512 + x) * 4;
               
-              // 获取形状和颜色像素
-              const shapeR = imageDataA.data[index];
-              const shapeG = imageDataA.data[index + 1];
-              const shapeB = imageDataA.data[index + 2];
-              const shapeA = imageDataA.data[index + 3];
+              // 获取两个图像的像素数据
+              const rA = imageDataA.data[index];
+              const gA = imageDataA.data[index + 1];
+              const bA = imageDataA.data[index + 2];
+              const aA = imageDataA.data[index + 3];
               
-              const colorR = imageDataB.data[index];
-              const colorG = imageDataB.data[index + 1];
-              const colorB = imageDataB.data[index + 2];
-              const colorA = imageDataB.data[index + 3];
+              const rB = imageDataB.data[index];
+              const gB = imageDataB.data[index + 1];
+              const bB = imageDataB.data[index + 2];
+              const aB = imageDataB.data[index + 3];
               
-              // 基于配置选择形状和颜色 - 确保完全填充，无黑色空白
+              // 检测透明区域
+              const isTransparentA = aA < 128;
+              const isTransparentB = aB < 128;
+              
+              // 检测面部区域（简化的面部检测）
+              const isFace = y > 100 && y < 200 && x > 200 && x < 300;
+              
               let finalR, finalG, finalB, finalA;
               
-              switch (finalConfig.shapeSource) {
-                case 'first':
-                  // 使用第一张图的形状，第二张图的颜色完全填充
-                  // 降低透明度阈值，确保形状完全填充
-                  finalA = shapeA > 1 ? 255 : 0;
+              if (isTransparentA && isTransparentB) {
+                // 都是透明区域
+                finalR = finalG = finalB = finalA = 0;
+              } else if (!isTransparentA && isTransparentB) {
+                // 只有A有内容
+                finalR = rA;
+                finalG = gA;
+                finalB = bA;
+                finalA = 255;
+              } else if (isTransparentA && !isTransparentB) {
+                // 只有B有内容
+                finalR = rB;
+                finalG = gB;
+                finalB = bB;
+                finalA = 255;
+              } else {
+                // 两个都有内容 - alexonsager风格融合
+                if (finalConfig.faceSwap && isFace) {
+                  // 面部替换：使用B的面部
+                  finalR = rB;
+                  finalG = gB;
+                  finalB = bB;
+                  finalA = 255;
+                } else {
+                  // 主体融合：A的形状 + B的颜色
+                  // 使用B的颜色，但保持A的亮度
+                  const brightnessA = (rA + gA + bA) / 3;
+                  const brightnessB = (rB + gB + bB) / 3;
                   
-                  if (shapeA > 1) {
-                    // 使用第二张图的颜色，确保完全填充形状
-                    // 如果第二张图在该位置有颜色，使用它；否则使用最近的有效颜色
-                    if (colorA > 1) {
-                      finalR = colorR;
-                      finalG = colorG;
-                      finalB = colorB;
-                    } else {
-                      // 寻找最近的有效颜色
-                      const nearestColor = findNearestValidColor(imageDataB, x, y, 512, 512);
-                      finalR = nearestColor.r;
-                      finalG = nearestColor.g;
-                      finalB = nearestColor.b;
-                    }
+                  if (brightnessB > 0) {
+                    const ratio = brightnessA / brightnessB;
+                    finalR = Math.min(255, Math.round(rB * ratio));
+                    finalG = Math.min(255, Math.round(gB * ratio));
+                    finalB = Math.min(255, Math.round(bB * ratio));
                   } else {
-                    // 透明区域保持透明
-                    finalR = finalG = finalB = finalA = 0;
+                    finalR = rB;
+                    finalG = gB;
+                    finalB = bB;
                   }
-                  break;
-                  
-                case 'second':
-                  // 使用第二张图的形状，第一张图的颜色完全填充
-                  finalA = colorA > 1 ? 255 : 0;
-                  
-                  if (colorA > 1) {
-                    // 使用第一张图的颜色，确保完全填充形状
-                    if (shapeA > 1) {
-                      finalR = shapeR;
-                      finalG = shapeG;
-                      finalB = shapeB;
-                    } else {
-                      // 寻找最近的有效颜色
-                      const nearestColor = findNearestValidColor(imageDataA, x, y, 512, 512);
-                      finalR = nearestColor.r;
-                      finalG = nearestColor.g;
-                      finalB = nearestColor.b;
-                    }
-                  } else {
-                    // 透明区域保持透明
-                    finalR = finalG = finalB = finalA = 0;
-                  }
-                  break;
-                  
-                case 'blend':
-                default:
-                  // 智能融合：确保完全填充，无黑色空白
-                  const useShape = shapeA > colorA;
-                  finalA = Math.max(shapeA, colorA) > 1 ? 255 : 0;
-                  
-                  if (finalA > 0) {
-                    // 使用对应的颜色，确保完全填充
-                    const sourceImage = useShape ? imageDataB : imageDataA;
-                    const sourceIndex = useShape ? 
-                      [colorR, colorG, colorB, colorA] : 
-                      [shapeR, shapeG, shapeB, shapeA];
-                    
-                    if (sourceIndex[3] > 1) {
-                      finalR = sourceIndex[0];
-                      finalG = sourceIndex[1];
-                      finalB = sourceIndex[2];
-                    } else {
-                      // 寻找最近的有效颜色
-                      const nearestColor = findNearestValidColor(
-                        sourceImage, x, y, 512, 512
-                      );
-                      finalR = nearestColor.r;
-                      finalG = nearestColor.g;
-                      finalB = nearestColor.b;
-                    }
-                  } else {
-                    // 透明区域保持透明
-                    finalR = finalG = finalB = finalA = 0;
-                  }
-                  break;
+                  finalA = 255;
+                }
               }
               
               // 确保颜色值在有效范围内
@@ -205,7 +175,7 @@ export async function createPixelFusion(
               finalG = Math.max(0, Math.min(255, finalG));
               finalB = Math.max(0, Math.min(255, finalB));
               
-              // 填充像素块 - 确保形状完全填充
+              // 填充像素块
               if (finalA > 0) {
                 for (let py = 0; py < finalConfig.pixelSize && y + py < 512; py++) {
                   for (let px = 0; px < finalConfig.pixelSize && x + px < 512; px++) {
@@ -390,7 +360,8 @@ export function generateRandomConfig(): FusionConfig {
     shapeSource: sampleSize(['first', 'second', 'blend'], 1)[0] as 'first' | 'second' | 'blend',
     colorSource: sampleSize(['first', 'second', 'blend'], 1)[0] as 'first' | 'second' | 'blend',
     pixelSize: sampleSize([1, 2, 4], 1)[0],
-    outline: Math.random() > 0.3
+    outline: Math.random() > 0.3,
+    faceSwap: Math.random() > 0.5 // 随机启用面部替换
   };
 }
 

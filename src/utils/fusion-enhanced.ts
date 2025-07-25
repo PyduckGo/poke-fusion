@@ -236,7 +236,7 @@ export class EnhancedFusion {
     return result;
   }
 
-  // 应用alexonsager风格的融合
+  // 应用alexonsager风格的融合 - 优化版
   private static applyAlexonsagerFusion(
     img1: any,
     img2: any,
@@ -254,6 +254,10 @@ export class EnhancedFusion {
     const dominantColor1 = this.getDominantColor(colorRegions1);
     const dominantColor2 = this.getDominantColor(colorRegions2);
 
+    // 检测面部区域（简化的面部检测）
+    const face1 = { x: width/2 - 32, y: height/3 - 32, width: 64, height: 64 };
+    const face2 = { x: width/2 - 32, y: height/3 - 32, width: 64, height: 64 };
+
     for (let y = 0; y < height; y++) {
       for (let x = 0; x < width; x++) {
         const pixel1 = img1.getPixelColor(x, y);
@@ -263,35 +267,49 @@ export class EnhancedFusion {
         const alpha2 = (pixel2 >> 24) & 255;
 
         if (alpha1 === 0 && alpha2 === 0) {
-          // 都是透明像素
           continue;
         }
 
         let finalColor: number;
 
-        if (alpha1 > 0 && alpha2 > 0) {
-          // 两个像素都有内容
-          const isEdge1 = edges1[y] && edges1[y][x];
-          const isEdge2 = edges2[y] && edges2[y][x];
+        // 检查是否在面部区域
+        const inFace1 = x >= face1.x && x < face1.x + face1.width && 
+                       y >= face1.y && y < face1.y + face1.height;
+        const inFace2 = x >= face2.x && x < face2.x + face2.width && 
+                       y >= face2.y && y < face2.y + face2.height;
 
-          if (isEdge1 && !isEdge2) {
-            // 保留img1的边缘，使用img2的颜色
-            finalColor = ColorUtils.blendColors(pixel2, dominantColor2, 0.8);
-          } else if (!isEdge1 && isEdge2) {
-            // 保留img2的边缘，使用img1的形状
-            finalColor = ColorUtils.blendColors(pixel1, dominantColor1, 0.8);
-          } else {
-            // 混合颜色
-            const blendRatio = 0.6; // img2占60%
-            finalColor = ColorUtils.blendColors(pixel1, pixel2, blendRatio);
-          }
+        if (inFace1 && inFace2) {
+          // 面部替换 - 使用第二个宝可梦的面部
+          finalColor = pixel2;
+        } else if (edges1[y] && edges1[y][x]) {
+          // 保留第一个宝可梦的轮廓线条
+          finalColor = pixel1;
+        } else if (alpha1 > 0 && alpha2 > 0) {
+          // 主体部分使用第二个宝可梦的颜色填充
+          const r1 = (pixel1 >> 16) & 255;
+          const g1 = (pixel1 >> 8) & 255;
+          const b1 = pixel1 & 255;
+          
+          const r2 = (pixel2 >> 16) & 255;
+          const g2 = (pixel2 >> 8) & 255;
+          const b2 = pixel2 & 255;
+          
+          // 使用第二个宝可梦的颜色，但保持第一个宝可梦的亮度
+          const brightness1 = (r1 + g1 + b1) / 3;
+          const brightness2 = (r2 + g2 + b2) / 3;
+          const ratio = brightness1 / brightness2;
+          
+          const newR = Math.min(255, Math.round(r2 * ratio));
+          const newG = Math.min(255, Math.round(g2 * ratio));
+          const newB = Math.min(255, Math.round(b2 * ratio));
+          
+          finalColor = (255 << 24) | (newR << 16) | (newG << 8) | newB;
         } else if (alpha1 > 0) {
-          // 只有img1有内容
-          finalColor = options.colorTransfer ? 
-            ColorUtils.blendColors(pixel1, dominantColor2, 0.3) : pixel1;
+          // 只使用第一个宝可梦
+          finalColor = pixel1;
         } else {
-          // 只有img2有内容
-          finalColor = options.preserveShape ? 0 : pixel2;
+          // 只使用第二个宝可梦
+          finalColor = pixel2;
         }
 
         fused.setPixelColor(finalColor, x, y);
