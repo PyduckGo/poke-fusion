@@ -46,8 +46,8 @@ const props = defineProps<Props>();
 
 // 获取显示名称（优先中文）
 const getDisplayName = computed(() => {
-  const chineseName = props.pokemon.names.find(
-    name => name.language.name === 'zh-Hans'
+  const chineseName = props.pokemon.names?.find(
+    name => name.language?.name === 'zh-Hans'
   );
   return chineseName?.name || props.pokemon.name;
 });

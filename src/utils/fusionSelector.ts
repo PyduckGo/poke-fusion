@@ -234,7 +234,7 @@ export class FusionAlgorithmSelector {
         results[algorithm] = {
           sprite: '',
           algorithm,
-          metadata: { error: error.message }
+          metadata: { error: (error as Error).message }
         };
       }
     });

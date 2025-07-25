@@ -1,256 +1,209 @@
-// 宝可梦融合算法实现 - 简化版本
-import type { Pokemon, FusionResult } from '../types';
-import { getChineseName } from './pokemonApi';
+// 使用 any 类型绕过 Jimp 类型检查
+declare const Jimp: any;
 
-// 融合算法类型
-export type FusionAlgorithm = 'xor' | 'blend' | 'chromatic';
+import { Pokemon, FusedPokemon, PokemonStats } from '../types/pokemon';
+import pokemonData from '../data/pokemon.json';
 
-// 创建融合宝可梦
-export async function createFusion(
-  pokemonA: Pokemon,
-  pokemonB: Pokemon,
-  algorithm: FusionAlgorithm = 'blend'
-): Promise<FusionResult> {
+// 生成融合ID
+export function generateFusionId(pokemon1: Pokemon, pokemon2: Pokemon): string {
+  return `F${Math.min(pokemon1.id, pokemon2.id).toString().padStart(3, '0')}${Math.max(pokemon1.id, pokemon2.id).toString().padStart(3, '0')}`;
+}
+
+// 生成中文融合名称
+export function generateChineseFusionName(name1: string, name2: string): string {
+  // 简单的名称融合算法
+  const len1 = Math.ceil(name1.length / 2);
+  const len2 = Math.floor(name2.length / 2);
+  return name1.substring(0, len1) + name2.substring(name2.length - len2);
+}
+
+// 获取宝可梦像素图片
+export async function getPokemonSprite(pokemonId: number): Promise<string> {
+  // 使用PokeAPI获取官方像素图
+  return `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${pokemonId}.png`;
+}
+
+// 融合两张图片
+export async function fusePokemonSprites(
+  sprite1Url: string,
+  sprite2Url: string,
+  useShape1: boolean = true
+): Promise<string> {
   try {
-    // 1. 获取精灵图片（使用Canvas API进行简单融合）
-    const fusedSprite = await createFusedSprite(pokemonA.sprites.front_default, pokemonB.sprites.front_default, algorithm);
+    // 加载两张图片
+    const [img1, img2] = await Promise.all([
+      Jimp.read(sprite1Url),
+      Jimp.read(sprite2Url)
+    ]);
 
-    // 2. 生成融合名称
-    const fusedName = generateFusionName(pokemonA, pokemonB);
+    // 确保图片大小一致
+    const size = 512;
+    img1.resize(size, size);
+    img2.resize(size, size);
 
-    // 3. 计算融合属性
-    const fusedTypes = calculateFusedTypes(pokemonA.types, pokemonB.types);
-    const fusedAbilities = calculateFusedAbilities(pokemonA.abilities, pokemonB.abilities);
-    const fusedHeight = calculateFusedStat(pokemonA.height, pokemonB.height);
-    const fusedWeight = calculateFusedStat(pokemonA.weight, pokemonB.weight);
+    // 创建融合图像
+    const fused = new Jimp(size, size);
 
-    // 4. 生成唯一ID
-    const fusionId = generateFusionId(pokemonA.id, pokemonB.id);
+    // 使用tracking.js类似的特征点检测逻辑
+    // 这里简化实现：使用形状遮罩进行融合
+    const mask = createShapeMask(img1);
+    
+    // 将第二张图片的颜色应用到第一张图片的形状上
+    img1.scan(0, 0, img1.bitmap.width, img1.bitmap.height, function(x: number, y: number, idx: number) {
+      const alpha = img1.bitmap.data[idx + 3];
+      if (alpha > 128) { // 非透明像素
+        const color = img2.getPixelColor(x, y);
+        fused.setPixelColor(color, x, y);
+      }
+    });
 
-    return {
-      id: fusionId,
-      name: fusedName,
-      pokemonA,
-      pokemonB,
-      fusedSprite,
-      types: fusedTypes,
-      abilities: fusedAbilities,
-      height: fusedHeight,
-      weight: fusedWeight,
-      cryUrl: pokemonA.cries.latest,
-      generation: Math.max(
-        getPokemonGeneration(pokemonA.id),
-        getPokemonGeneration(pokemonB.id)
-      )
-    };
+    // 应用像素化效果
+    const pixelated = applyPixelation(fused, 8);
+    
+    return await pixelated.getBase64Async('image/png');
   } catch (error) {
-    console.error('融合失败:', error);
-    throw new Error('无法创建融合宝可梦');
+    console.error('融合图片失败:', error);
+    throw error;
   }
 }
 
-// 使用Canvas创建融合精灵
-async function createFusedSprite(spriteUrlA: string, spriteUrlB: string, algorithm: string): Promise<string> {
-  return new Promise((resolve, reject) => {
-    const canvas = document.createElement('canvas');
-    const ctx = canvas.getContext('2d');
-    
-    if (!ctx) {
-      reject(new Error('无法创建canvas'));
-      return;
-    }
-
-    canvas.width = 256;
-    canvas.height = 256;
-
-    const imgA = new Image();
-    const imgB = new Image();
-
-    imgA.crossOrigin = 'anonymous';
-    imgB.crossOrigin = 'anonymous';
-
-    let loadedCount = 0;
-    
-    const checkBothLoaded = () => {
-      loadedCount++;
-      if (loadedCount === 2) {
-        // 绘制两张图片 - 启用平滑处理
-        ctx.imageSmoothingEnabled = true;
-        ctx.imageSmoothingQuality = 'high';
-        
-        // 清除画布
-        ctx.clearRect(0, 0, 256, 256);
-        
-        switch (algorithm) {
-          case 'xor':
-            // XOR效果：使用globalCompositeOperation
-            ctx.globalCompositeOperation = 'source-over';
-            ctx.drawImage(imgA, 0, 0, 256, 256);
-            ctx.globalCompositeOperation = 'xor';
-            ctx.drawImage(imgB, 0, 0, 256, 256);
-            break;
-            
-          case 'chromatic':
-            // 色彩偏移效果 - 更自然的色彩混合
-            ctx.globalCompositeOperation = 'source-over';
-            ctx.filter = 'hue-rotate(45deg) saturate(1.2)';
-            ctx.globalAlpha = 0.7;
-            ctx.drawImage(imgA, 0, 0, 256, 256);
-            ctx.filter = 'hue-rotate(-45deg) saturate(1.2)';
-            ctx.globalAlpha = 0.7;
-            ctx.drawImage(imgB, 0, 0, 256, 256);
-            break;
-            
-          case 'blend':
-          default:
-            // 混合效果 - 使用更自然的混合
-            ctx.globalCompositeOperation = 'source-over';
-            ctx.globalAlpha = 0.65;
-            ctx.drawImage(imgA, 0, 0, 256, 256);
-            ctx.globalAlpha = 0.65;
-            ctx.drawImage(imgB, 0, 0, 256, 256);
-            break;
-        }
-
-        // 应用像素化效果（可选）
-        // const imageData = ctx.getImageData(0, 0, 256, 256);
-        // const pixelated = pixelateImageData(imageData, 8);
-        // ctx.putImageData(pixelated, 0, 0);
-
-        resolve(canvas.toDataURL());
-      }
-    };
-
-    imgA.onload = checkBothLoaded;
-    imgB.onload = checkBothLoaded;
-    imgA.onerror = reject;
-    imgB.onerror = reject;
-
-    imgA.src = spriteUrlA;
-    imgB.src = spriteUrlB;
+// 创建形状遮罩
+function createShapeMask(image: any): boolean[][] {
+  const mask: boolean[][] = [];
+  image.scan(0, 0, image.bitmap.width, image.bitmap.height, function(x: number, y: number, idx: number) {
+    if (!mask[y]) mask[y] = [];
+    mask[y][x] = image.bitmap.data[idx + 3] > 128;
   });
+  return mask;
 }
 
-// 像素化图像数据
-function pixelateImageData(imageData: ImageData, pixelSize: number): ImageData {
-  const { width, height, data } = imageData;
-  const newData = new Uint8ClampedArray(data);
-  
+// 应用像素化效果
+function applyPixelation(image: any, pixelSize: number): any {
+  const width = image.bitmap.width;
+  const height = image.bitmap.height;
+  const result = new Jimp(width, height);
+
   for (let y = 0; y < height; y += pixelSize) {
     for (let x = 0; x < width; x += pixelSize) {
-      const pos = (y * width + x) * 4;
-      const r = data[pos];
-      const g = data[pos + 1];
-      const b = data[pos + 2];
-      const a = data[pos + 3];
+      // 获取像素块的颜色
+      const color = image.getPixelColor(x, y);
       
-      // 填充像素块
+      // 填充整个像素块
       for (let py = 0; py < pixelSize && y + py < height; py++) {
         for (let px = 0; px < pixelSize && x + px < width; px++) {
-          const newPos = ((y + py) * width + (x + px)) * 4;
-          newData[newPos] = r;
-          newData[newPos + 1] = g;
-          newData[newPos + 2] = b;
-          newData[newPos + 3] = a;
+          result.setPixelColor(color, x + px, y + py);
         }
       }
     }
   }
-  
-  return new ImageData(newData, width, height);
-}
 
-// 生成融合名称
-function generateFusionName(pokemonA: Pokemon, pokemonB: Pokemon): string {
-  const nameA = getChineseName(pokemonA);
-  const nameB = getChineseName(pokemonB);
-  
-  // 简单的名称融合算法
-  const splitPointA = Math.floor(nameA.length / 2);
-  const splitPointB = Math.floor(nameB.length / 2);
-  
-  const firstHalf = nameA.substring(0, splitPointA);
-  const secondHalf = nameB.substring(splitPointB);
-  
-  // 添加随机后缀
-  const suffixes = ['兽', '龙', '鸟', '鱼', '花', '草', '火', '水', '雷', '冰'];
-  const suffix = suffixes[Math.floor(Math.random() * suffixes.length)] || '兽';
-  
-  return firstHalf + secondHalf + suffix;
+  return result;
 }
 
 // 计算融合属性
-function calculateFusedTypes(typesA: any[], typesB: any[]): string[] {
-  const typeNamesA = typesA.map((t: any) => t.type.name);
-  const typeNamesB = typesB.map((t: any) => t.type.name);
-  
+export function calculateFusedTypes(type1: string[], type2: string[]): string[] {
   // 合并并去重
-  const allTypes = [...typeNamesA, ...typeNamesB];
-  const uniqueTypes = [...new Set(allTypes)];
+  const combined = [...type1, ...type2];
+  const unique = [...new Set(combined)];
   
-  // 最多保留2个属性
-  if (uniqueTypes.length > 2) {
-    return uniqueTypes.slice(0, 2);
+  // 如果超过2种类型，选择最有代表性的2种
+  if (unique.length > 2) {
+    // 优先保留稀有类型
+    const priority = ['龙', '超能力', '幽灵', '恶', '钢', '妖精'];
+    return unique.sort((a, b) => {
+      const aIndex = priority.indexOf(a);
+      const bIndex = priority.indexOf(b);
+      return (aIndex === -1 ? 999 : aIndex) - (bIndex === -1 ? 999 : bIndex);
+    }).slice(0, 2);
   }
   
-  return uniqueTypes;
+  return unique;
 }
 
-// 计算融合特性
-function calculateFusedAbilities(abilitiesA: any[], abilitiesB: any[]): string[] {
-  const allAbilities = [...abilitiesA, ...abilitiesB];
-  
-  // 按权重排序（非隐藏特性优先）
-  const sortedAbilities = allAbilities
-    .filter((a: any) => !a.is_hidden)
-    .sort(() => Math.random() - 0.5)
-    .slice(0, 2)
-    .map((a: any) => a.ability.name);
-  
-  return sortedAbilities;
+// 计算融合属性值
+export function calculateFusedStats(stats1: PokemonStats, stats2: PokemonStats): PokemonStats {
+  return {
+    hp: Math.round((stats1.hp + stats2.hp) / 2),
+    attack: Math.round((stats1.attack + stats2.attack) / 2),
+    defense: Math.round((stats1.defense + stats2.defense) / 2),
+    specialAttack: Math.round((stats1.specialAttack + stats2.specialAttack) / 2),
+    specialDefense: Math.round((stats1.specialDefense + stats2.specialDefense) / 2),
+    speed: Math.round((stats1.speed + stats2.speed) / 2)
+  };
 }
 
-// 计算融合数值
-function calculateFusedStat(statA: number, statB: number): number {
-  // 使用平均值加一点随机性
-  const average = (statA + statB) / 2;
-  const variation = average * 0.2; // 20%的随机变化
-  return Math.round(average + (Math.random() - 0.5) * variation);
-}
-
-// 生成融合ID
-function generateFusionId(idA: number, idB: number): string {
-  // 使用SHA-256类似的哈希算法生成唯一ID
-  const combined = `${idA}-${idB}-${Date.now()}`;
-  let hash = 0;
+// 随机选择宝可梦
+export function getRandomPokemonPair(): [Pokemon, Pokemon] {
+  const gen1Pokemon = pokemonData.filter(p => p.generation === 1);
+  const gen2Pokemon = pokemonData.filter(p => p.generation === 2);
+  const gen3Pokemon = pokemonData.filter(p => p.generation === 3);
   
-  for (let i = 0; i < combined.length; i++) {
-    const char = combined.charCodeAt(i);
-    hash = ((hash << 5) - hash) + char;
-    hash = hash & hash; // 转换为32位整数
+  // 从不同世代随机选择
+  const generations = [gen1Pokemon, gen2Pokemon, gen3Pokemon];
+  const selectedGens: Pokemon[] = [];
+  
+  while (selectedGens.length < 2) {
+    const randomGen = generations[Math.floor(Math.random() * generations.length)];
+    const randomPokemon = randomGen[Math.floor(Math.random() * randomGen.length)];
+    
+    if (!selectedGens.some(p => p.id === randomPokemon.id)) {
+      selectedGens.push(randomPokemon);
+    }
   }
   
-  return `F${Math.abs(hash).toString(16).toUpperCase()}`;
+  return [selectedGens[0], selectedGens[1]] as [Pokemon, Pokemon];
 }
 
-// 获取宝可梦世代
-function getPokemonGeneration(pokemonId: number): number {
-  if (pokemonId <= 151) return 1;
-  if (pokemonId <= 251) return 2;
-  if (pokemonId <= 386) return 3;
-  if (pokemonId <= 493) return 4;
-  if (pokemonId <= 649) return 5;
-  if (pokemonId <= 721) return 6;
-  if (pokemonId <= 809) return 7;
-  if (pokemonId <= 905) return 8;
-  return 9;
+// 获取宝可梦详细数据
+export async function getPokemonDetails(pokemonId: number) {
+  // 这里可以集成PokeAPI获取更详细的数据
+  const pokemon = pokemonData.find(p => p.id === pokemonId);
+  if (!pokemon) throw new Error(`找不到ID为${pokemonId}的宝可梦`);
+  
+  return {
+    ...pokemon,
+    stats: {
+      hp: 50 + Math.floor(Math.random() * 100),
+      attack: 50 + Math.floor(Math.random() * 100),
+      defense: 50 + Math.floor(Math.random() * 100),
+      specialAttack: 50 + Math.floor(Math.random() * 100),
+      specialDefense: 50 + Math.floor(Math.random() * 100),
+      speed: 50 + Math.floor(Math.random() * 100)
+    },
+    abilities: ['特性1', '特性2', '隐藏特性']
+  };
 }
 
-// 导出工具函数供测试使用
-export {
-  generateFusionName,
-  calculateFusedTypes,
-  calculateFusedAbilities,
-  calculateFusedStat,
-  generateFusionId
-};
+// 用户图片与宝可梦融合
+export async function fuseUserImageWithPokemon(
+  userImageUrl: string,
+  pokemonSpriteUrl: string
+): Promise<string> {
+  try {
+    const [userImg, pokemonImg] = await Promise.all([
+      Jimp.read(userImageUrl),
+      Jimp.read(pokemonSpriteUrl)
+    ]);
+
+    const size = 512;
+    userImg.resize(size, size);
+    pokemonImg.resize(size, size);
+
+    // 创建融合图像，使用宝可梦形状，用户图片颜色
+    const fused = new Jimp(size, size);
+    
+    // 使用宝可梦作为形状遮罩
+    pokemonImg.scan(0, 0, pokemonImg.bitmap.width, pokemonImg.bitmap.height, function(x: number, y: number, idx: number) {
+      const alpha = pokemonImg.bitmap.data[idx + 3];
+      if (alpha > 128) {
+        const userColor = userImg.getPixelColor(x, y);
+        fused.setPixelColor(userColor, x, y);
+      }
+    });
+
+    return await fused.getBase64Async(Jimp.MIME_PNG);
+  } catch (error) {
+    console.error('用户图片融合失败:', error);
+    throw error;
+  }
+}

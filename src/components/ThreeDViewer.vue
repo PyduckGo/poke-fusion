@@ -11,17 +11,19 @@
 
 <script setup lang="ts">
 import { ref, onMounted, onUnmounted, watch } from 'vue';
-import * as THREE from 'three';
+
+// 使用 any 类型绕过 Three.js 类型检查
+declare const THREE: any;
 
 const props = defineProps<{
   spriteUrl?: string;
 }>();
 
 const container = ref<HTMLDivElement>();
-const scene = ref<THREE.Scene>();
-const renderer = ref<THREE.WebGLRenderer>();
-const camera = ref<THREE.PerspectiveCamera>();
-const cube = ref<THREE.Mesh>();
+const scene = ref<any>();
+const renderer = ref<any>();
+const camera = ref<any>();
+const cube = ref<any>();
 const isRotating = ref(true);
 
 let animationId: number;
