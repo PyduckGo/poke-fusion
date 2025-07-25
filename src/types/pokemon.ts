@@ -1,47 +1,45 @@
-// 宝可梦基础类型定义
+// 宝可梦类型定义
 export interface Pokemon {
   id: number;
   name: string;
   english: string;
   type: string[];
   generation: number;
+  height?: number;
+  weight?: number;
+  abilities?: string[];
+  stats?: {
+    hp: number;
+    attack: number;
+    defense: number;
+    spAttack: number;
+    spDefense: number;
+    speed: number;
+  };
 }
 
-// 融合宝可梦类型
-export interface FusedPokemon {
+// 融合结果类型
+export interface FusionResult {
   id: string;
   name: string;
-  original1: Pokemon;
-  original2: Pokemon;
-  fusedImage: string;
+  pokemonA: Pokemon;
+  pokemonB: Pokemon;
+  fusedSprite: string;
   types: string[];
   abilities: string[];
-  stats: PokemonStats;
-  cry: string;
+  height: number;
+  weight: number;
+  generation: number;
 }
 
-// 宝可梦属性
-export interface PokemonStats {
-  hp: number;
-  attack: number;
-  defense: number;
-  specialAttack: number;
-  specialDefense: number;
-  speed: number;
-}
-
-// 融合配置
-export interface FusionConfig {
-  useRandom: boolean;
-  pokemon1?: Pokemon;
-  pokemon2?: Pokemon;
-  userImage?: string;
-  customName?: string;
-}
-
-// 像素化配置
-export interface PixelConfig {
-  size: number;
-  palette: string[];
-  dithering: boolean;
+// 用户照片融合结果
+export interface UserFusionResult {
+  id: string;
+  name: string;
+  userImage: string;
+  pokemon: Pokemon;
+  fusedSprite: string;
+  types: string[];
+  abilities: string[];
+  generation: number;
 }

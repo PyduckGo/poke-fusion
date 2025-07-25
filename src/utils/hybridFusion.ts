@@ -113,7 +113,7 @@ export class HybridFusion {
   /**
    * 提取宝可梦特征
    */
-  private static extractFeatures(pokemon: Pokemon): PokemonFeatures {
+  static extractFeatures(pokemon: Pokemon): PokemonFeatures {
     // 基于类型推断特征
     const typeFeatures = this.getTypeFeatures(pokemon.type);
     
@@ -135,7 +135,7 @@ export class HybridFusion {
   /**
    * 根据类型获取特征
    */
-  private static getTypeFeatures(types: string[]): {
+  static getTypeFeatures(types: string[]): {
     bodyShape: string;
     colors: string[];
     features: string[];
@@ -195,7 +195,7 @@ export class HybridFusion {
   /**
    * 根据ID推断体型
    */
-  private static getSizeFromId(id: number): 'small' | 'medium' | 'large' {
+  static getSizeFromId(id: number): 'small' | 'medium' | 'large' {
     if (id <= 100) return 'small';
     if (id <= 200) return 'medium';
     return 'large';
@@ -204,7 +204,7 @@ export class HybridFusion {
   /**
    * 根据名称推断栖息地
    */
-  private static getHabitatFromName(name: string): string {
+  static getHabitatFromName(name: string): string {
     const habitatMap: Record<string, string> = {
       '龙': 'mountain',
       '水': 'ocean',
@@ -225,7 +225,7 @@ export class HybridFusion {
   /**
    * 基因混合算法
    */
-  private static mixGenes(
+  static mixGenes(
     featuresA: PokemonFeatures,
     featuresB: PokemonFeatures,
     mixRatio: number
@@ -245,7 +245,7 @@ export class HybridFusion {
   /**
    * 混合颜色调色板
    */
-  private static mixColorPalettes(
+  static mixColorPalettes(
     paletteA: string[],
     paletteB: string[],
     ratio: number
@@ -270,7 +270,7 @@ export class HybridFusion {
   /**
    * 混合特征
    */
-  private static mixFeatures(
+  static mixFeatures(
     featuresA: string[],
     featuresB: string[],
     ratio: number
@@ -298,7 +298,7 @@ export class HybridFusion {
   /**
    * 生成新物种
    */
-  private static generateNewSpecies(
+  static generateNewSpecies(
     pokemonA: Pokemon,
     pokemonB: Pokemon,
     features: PokemonFeatures,
@@ -340,7 +340,7 @@ export class HybridFusion {
   /**
    * 生成杂交名称
    */
-  private static generateHybridName(nameA: string, nameB: string): string {
+  static generateHybridName(nameA: string, nameB: string): string {
     // 中文名称混合算法
     const charsA = nameA.split('');
     const charsB = nameB.split('');
@@ -359,7 +359,7 @@ export class HybridFusion {
   /**
    * 混合类型
    */
-  private static mixTypes(typesA: string[], typesB: string[]): string[] {
+  static mixTypes(typesA: string[], typesB: string[]): string[] {
     const allTypes = [...new Set([...typesA, ...typesB])];
     
     // 限制为最多2种类型
@@ -372,7 +372,7 @@ export class HybridFusion {
   /**
    * 混合能力
    */
-  private static mixAbilities(nameA: string, nameB: string): string[] {
+  static mixAbilities(nameA: string, nameB: string): string[] {
     const abilityMap: Record<string, string[]> = {
       '火': ['猛火', '火焰之躯', '日照'],
       '水': ['激流', '雨盘', '储水'],
@@ -402,7 +402,7 @@ export class HybridFusion {
   /**
    * 混合属性
    */
-  private static mixStats(
+  static mixStats(
     pokemonA: Pokemon,
     pokemonB: Pokemon,
     ratio: number
@@ -447,7 +447,7 @@ export class HybridFusion {
   /**
    * 生成进化信息
    */
-  private static generateEvolution(
+  static generateEvolution(
     pokemonA: Pokemon,
     pokemonB: Pokemon,
     useChain: boolean
@@ -473,7 +473,7 @@ export class HybridFusion {
   /**
    * 生成杂交精灵图
    */
-  private static async generateHybridSprite(
+  static async generateHybridSprite(
     pokemonA: Pokemon,
     pokemonB: Pokemon,
     features: PokemonFeatures
@@ -515,7 +515,7 @@ export class HybridFusion {
   /**
    * 绘制身体形状
    */
-  private static drawBodyShape(
+  static drawBodyShape(
     ctx: CanvasRenderingContext2D,
     shape: string,
     color: string
@@ -563,7 +563,7 @@ export class HybridFusion {
   /**
    * 绘制特殊特征
    */
-  private static drawFeature(
+  static drawFeature(
     ctx: CanvasRenderingContext2D,
     feature: string,
     color: string
@@ -618,7 +618,7 @@ export class HybridFusion {
   /**
    * 应用像素化效果
    */
-  private static applyPixelation(
+  static applyPixelation(
     ctx: CanvasRenderingContext2D,
     width: number,
     height: number,

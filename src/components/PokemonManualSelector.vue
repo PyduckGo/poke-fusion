@@ -41,7 +41,7 @@
 import { ref } from 'vue';
 import ManualPokemonFilter from './ManualPokemonFilter.vue';
 import { getRandomPokemon, getRandomPokemonPair, getPokemonByGeneration } from '../data/pokemonData';
-import type { Pokemon } from '../data/pokemonData';
+import type { Pokemon } from '../types/pokemon';
 
 const props = defineProps<{
   target: 'A' | 'B';

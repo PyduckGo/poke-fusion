@@ -129,7 +129,7 @@ import { CacheManager } from '../utils/cache';
 import { audioManager } from '../utils/audioManager';
 import PokemonManualSelector from './PokemonManualSelector.vue';
 import { getRandomPokemonPair, getRandomPokemon } from '../data/pokemonData';
-import type { Pokemon } from '../data/pokemonData';
+import type { Pokemon } from '../types/pokemon';
 
 // 状态管理
 const showSplash = ref(true);

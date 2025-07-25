@@ -1,7 +1,7 @@
 // 使用 any 类型绕过 Jimp 类型检查
 declare const Jimp: any;
 
-import { Pokemon, FusedPokemon, PokemonStats } from '../types/pokemon';
+import { Pokemon, FusionResult } from '../types/pokemon';
 import pokemonData from '../data/pokemon.json';
 
 // 生成融合ID
@@ -113,7 +113,7 @@ export function calculateFusedTypes(type1: string[], type2: string[]): string[] 
 }
 
 // 计算融合属性值
-export function calculateFusedStats(stats1: PokemonStats, stats2: PokemonStats): PokemonStats {
+export function calculateFusedStats(stats1: any, stats2: any): any {
   return {
     hp: Math.round((stats1.hp + stats2.hp) / 2),
     attack: Math.round((stats1.attack + stats2.attack) / 2),
